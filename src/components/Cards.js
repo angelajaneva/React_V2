@@ -1,32 +1,27 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import Card from "./Card";
+
 import {useParams, useHistory} from "react-router-dom";
-import axios from '../custom-axios'
 
 const Cards = (props) => {
 
-    const [notes, setNotes] = useState([]);
     const {classId} = useParams();
+    const history = useHistory();
 
-    useEffect(() => {
-        axios.get("/notes/" + classId).then(data => {
-            setNotes(data.data)
-        })
-    }, []);
 
 
     function getNotes() {
-        return notes.map(note => {
+        const newRef = props.cards.filter(note => {
+            return note.aclass.id === classId;
+        });
+
+        return newRef.map(note => {
             return (
                 <Card key={note.id} title={note.title}
                       descr={note.description} id={note.id} onDelete={props.onDelete} classId={classId}/>
             )
         })
     }
-
-
-    const history = useHistory();
-
 
     return (
         <div>
@@ -37,7 +32,8 @@ const Cards = (props) => {
                         <div className="mt-4">
                             <div className="ml-4 form-inline">
                                 <button className="btn-light card" style={{width: '30%'}} onClick={() => {
-                                    history.push("/note/new")}}>
+                                    history.push("/note/new")
+                                }}>
                                     <p className="text-center">Add new note</p>
                                 </button>
                                 {/*<input type="text" className="card  ml-xl-5" placeholder=" Search"*/}

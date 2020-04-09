@@ -19,8 +19,8 @@ const service = {
         return axios.get("/classes/S17001")
     },
 
-    getToDo: ()=> {
-      return axios.get("/todos")
+    getToDo: () => {
+        return axios.get("/todos")
     },
 
     addNote: (note) => {
@@ -49,6 +49,10 @@ const service = {
     },
     deleteNote: (noteId) => {
         return axios.delete("/" + noteId);
+    },
+
+    deleteQuestion: (questionId) => {
+        return axios.delete("/questions/" + questionId);
     },
 
     updateTodo: (todo) => {

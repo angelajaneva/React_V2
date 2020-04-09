@@ -4,7 +4,7 @@ import Collapsible from 'react-collapsible'
 
 const Sidebar = (props) => {
 
-    function getClasses() {
+    const getClasses = () => {
         return props.subjects.map(subject => {
             return (
                 <div key={subject.id}>
@@ -14,7 +14,7 @@ const Sidebar = (props) => {
                 </div>
             )
         })
-    }
+    };
 
     return (
         <div className="d-flex">

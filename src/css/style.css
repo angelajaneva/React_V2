@@ -4527,6 +4527,15 @@ input[type="button"].btn-block {
     list-style: none;
 }
 
+.navbar-nav .nav-item:hover{
+    /*background-color: lightgray;*/
+    border-bottom: 7px solid darkgray;
+}
+
+.navbar-nav nav-item:active{
+    border-bottom: 7px solid darkgray;
+}
+
 .nav-link {
     display: block;
     padding: 0.5rem 1rem;
@@ -4671,6 +4680,7 @@ input[type="button"].btn-block {
     list-style: none;
 }
 
+
 .navbar-nav .nav-link {
     padding-right: 0;
     padding-left: 0;
@@ -4696,6 +4706,10 @@ input[type="button"].btn-block {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+}
+
+.nav-item{
+
 }
 
 .navbar-toggler {

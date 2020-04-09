@@ -11,7 +11,7 @@ const Content = (props) => {
         axios.get("/class/" + props.id).then(data => {
             setName(data.data)
         })
-    }, []);
+    });
 
     return (
         <div>

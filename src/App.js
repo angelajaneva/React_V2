@@ -1,14 +1,19 @@
 import React, {Component} from 'react';
+import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
+import {connect} from "react-redux";
+import * as noteActionCreator from './store/actions/note'
+import * as questionActionCreator from './store/actions/questions'
+import * as classesActionCreator from './store/actions/classes'
+import * as toDoActionCreator from './store/actions/todos'
+
 import './App.css';
 import './components/Header'
 import Header from './components/Header';
 import Home from './components/Home'
 import Sidebar from "./components/Sidebar";
-import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
 import NoteEdit from "./components/NoteEdit";
 import Cards from "./components/Cards";
 import Questions from "./components/Questions";
-import service from './axiosRepository'
 import NoteAdd from "./components/NoteAdd"
 import ToDo from "./components/ToDo"
 import Content from "./components/Content";
@@ -18,79 +23,19 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            notes: [],
-            questions: [],
-            classes: [],
-            toDos: [],
             editingTodo: false,
-            notEditing: true
+            notEditing: true,
+            subject: ""
         }
     }
 
     componentDidMount() {
-        this.loadingNotes();
-        this.loadingQuestions();
-        this.getClassesForStudent();
-        this.loadingTodos();
+        this.props.loadingNotes();
+        this.props.loadingQuestions();
+        this.props.loadClasses();
+        this.props.loadToDos();
     }
 
-
-    loadingNotes = () => {
-        service.getNotes().then(response => {
-            this.setState({
-                "notes": response.data
-            });
-        })
-    };
-
-
-    loadingQuestions = () => {
-        service.getQuestions().then(response => {
-            this.setState({
-                "questions": response.data
-            });
-        })
-    };
-
-    getClassesForStudent = () => {
-        service.getClasses().then(response => {
-            this.setState({
-                "classes": response.data
-            })
-        })
-    };
-
-    loadingTodos = () => {
-        service.getToDo().then(response => {
-            this.setState({
-                "toDos": response.data
-            })
-        })
-    };
-
-    createNote = (newNote) => {
-        service.addNote(newNote).then((response) => {
-            const newNote = response.data;
-            this.setState((prevState) => {
-                const newNoteRef = [...prevState.notes, newNote];
-                return {
-                    "notes": newNoteRef
-                }
-            });
-        });
-    };
-
-    updateNotes = ((editedNote) => {
-        service.updateNote(editedNote).then(this.loadingNotes)
-    });
-
-    deleteNotes = ((noteId) => {
-        service.deleteNote(noteId).then(this.loadingNotes)
-    });
-
-    updateToDo = ((edited) => {
-        service.updateTodo(edited).then(this.loadingTodos)
-    });
 
     clickForEdit = () => {
         this.setState({
@@ -100,7 +45,8 @@ class App extends Component {
         })
     };
 
-
+//sekade kaj so se koriste this.state.notes sea da se zamene so this.props.nts
+//sekade kaj so ima this.createNote --> this.props.onCreateNote isto za site metodi
     render() {
         return (
             <div>
@@ -113,9 +59,9 @@ class App extends Component {
                         </div>}>
                     </Route>
 
-                    <Route path={"/home"} >
+                    <Route path={"/home"}>
                         <div className={"wrapper d-flex align-items-stretch"} id="content">
-                            <Sidebar subjects={this.state.classes}/>
+                            <Sidebar subjects={this.props.classes}/>
                         </div>
                         {/*<Cards onPageClick={this.loadingNotes} obj={this.state.notes}*/}
                         {/*       subjects={this.state.classes} onDelete={this.deleteNotes}/>}>*/}
@@ -127,20 +73,21 @@ class App extends Component {
 
                     <Route path={"/:classId/notes"} exact render={(props) =>
                         <div className={"wrapper d-flex align-items-stretch"} id="">
-                            <Sidebar subjects={this.state.classes}/>
+                            <Sidebar subjects={this.props.classes}/>
                             <div id="content" className="p-4 p-md-5 pt-5">
                                 <Content id={props.match.params.classId}/>
-                                <Cards onDelete={this.deleteNotes}/>
+                                <Cards cards={this.props.notes} onDelete={this.props.onDeleteNote}/>
+                                {/*onDelete={this.deleteNotes}*/}
                             </div>
                         </div>
                     }/>
 
                     <Route path={"/:classId/questions"} exact render={(props) =>
                         <div className={"wrapper d-flex align-items-stretch"} id="">
-                            <Sidebar subjects={this.state.classes}/>
+                            <Sidebar subjects={this.props.classes}/>
                             <div id="content" className="p-4 p-md-5 pt-5">
                                 <Content id={props.match.params.classId}/>
-                                <Questions/>
+                                <Questions questions={this.props.questions} onDelete={this.props.onDeleteQuestion}/>
                             </div>
                         </div>
                     }/>
@@ -148,10 +95,10 @@ class App extends Component {
 
                     <Route path={"/:classId/:noteId/edit"} exact render={(props) =>
                         <div className={"wrapper d-flex align-items-stretch"} id="content">
-                            <Sidebar subjects={this.state.classes}/>
+                            <Sidebar subjects={this.props.classes}/>
                             <div id="content" className="p-4 p-md-5 pt-5">
                                 <Content id={props.match.params.classId}/>
-                                <NoteEdit onSubmitt={this.updateNotes} id={props.match.params.classId}/>
+                                <NoteEdit onSubmitt={this.props.onUpdateNote} id={props.match.params.classId}/>
                             </div>
                         </div>
 
@@ -159,17 +106,17 @@ class App extends Component {
 
                     <Route path={"/note/new"} exact>
                         <div className={"wrapper d-flex align-items-stretch"} id="content">
-                            <Sidebar subjects={this.state.classes}/>
-                            <NoteAdd onNewTermAdded={this.createNote}/>
+                            <Sidebar subjects={this.props.classes}/>
+                            <NoteAdd onNewTermAdded={this.onCreateNote}/>
                         </div>
                     </Route>
 
                     <Route path={"/todo"}>
                         <div className={"wrapper d-flex align-items-stretch"} id="content">
-                            <Sidebar subjects={this.state.classes}/>
-                            <ToDo todos={this.state.toDos} edit={this.state.editingTodo}
+                            <Sidebar subjects={this.props.classes}/>
+                            <ToDo todos={this.props.toDos} edit={this.state.editingTodo}
                                   not={this.state.notEditing} onClickHandler={this.clickForEdit}
-                                  onSubmit={this.updateToDo}/>
+                                  onSubmit={this.props.onUpdateToDo}/>
                         </div>
                     </Route>
 
@@ -180,4 +127,29 @@ class App extends Component {
     }
 }
 
-export default App;
+//which property should hold which slide of the state
+const mapStateToProps = (state) => {
+    return {
+        notes: state.classReducer.notes,
+        questions: state.classReducer.questions,
+        classes: state.classReducer.classes,
+        toDos: state.toDoReducer.toDos
+    }
+};
+//receives the dispatch function as arg
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onCreateNote: (note) => dispatch(noteActionCreator.addNote(note)),
+        onDeleteNote: (id) => dispatch(noteActionCreator.deleteNotes(id)),
+        onUpdateNote: (note) => dispatch(noteActionCreator.updateNotes(note)),
+        loadingNotes: () => dispatch(noteActionCreator.loadNotes()),
+        onCreateQuestion: (question) => dispatch(questionActionCreator.addQuestion(question)),
+        onDeleteQuestion: (id) => dispatch(questionActionCreator.deleteQuestions(id)),
+        loadingQuestions: () => dispatch(questionActionCreator.loadQuestions()),
+        loadClasses: () => dispatch(classesActionCreator.loadClassesForStudent()),
+        onUpdateToDo: (toDo) => dispatch(toDoActionCreator.updateToDo(toDo)),
+        loadToDos: () => dispatch(toDoActionCreator.loadToDos()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
