@@ -51,7 +51,7 @@ const Sidebar = (props) => {
                     </li>
 
                     <li>
-                        <Link to="#"><span className="ti-settings mr-3"/> Settings</Link>
+                        <Link to="#"><span className="ti-book mr-3"/> Reviews</Link>
                     </li>
 
                     <li>
