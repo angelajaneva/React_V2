@@ -34,7 +34,7 @@ const Cards = (props) => {
                                 <button className="btn-light card" style={{width: '30%'}} onClick={() => {
                                     history.push("/note/new")
                                 }}>
-                                    <p className="text-center">Add new note</p>
+                                    Add new note
                                 </button>
                                 {/*<input type="text" className="card  ml-xl-5" placeholder=" Search"*/}
                                 {/*       style={{width: '30%', height:''}}/>*/}

@@ -27,6 +27,7 @@ const service = {
         const data = {
             ...note
         };
+        // {console.log("vo axios repo " + note.aclass.id)}
         const formParams = qs.stringify(data);
         return axios.post("/note", formParams, {
             headers: {
@@ -54,6 +55,20 @@ const service = {
     deleteQuestion: (questionId) => {
         return axios.delete("/questions/" + questionId);
     },
+
+    addQuestion: (question) => {
+        const data = {
+            ...question
+        };
+        // {console.log("vo axios repo " + note.aclass.id)}
+        const formParams = qs.stringify(data);
+        return axios.post("/question", formParams, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+    },
+
 
     updateTodo: (todo) => {
         const data = {

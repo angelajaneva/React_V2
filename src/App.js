@@ -17,6 +17,7 @@ import Questions from "./components/Questions";
 import NoteAdd from "./components/NoteAdd"
 import ToDo from "./components/ToDo"
 import Content from "./components/Content";
+import QuestionAdd from "./components/QuestionAdd";
 
 class App extends Component {
 
@@ -107,9 +108,17 @@ class App extends Component {
                     <Route path={"/note/new"} exact>
                         <div className={"wrapper d-flex align-items-stretch"} id="content">
                             <Sidebar subjects={this.props.classes}/>
-                            <NoteAdd onNewTermAdded={this.onCreateNote}/>
+                            <NoteAdd onNewTermAdded={this.props.onCreateNote}/>
                         </div>
                     </Route>
+
+                    <Route path={"/question/new"} exact>
+                        <div className={"wrapper d-flex align-items-stretch"} id="content">
+                            <Sidebar subjects={this.props.classes}/>
+                            <QuestionAdd onNewTermAdded={this.props.onCreateQuestion}/>
+                        </div>
+                    </Route>
+
 
                     <Route path={"/todo"}>
                         <div className={"wrapper d-flex align-items-stretch"} id="content">
@@ -139,11 +148,11 @@ const mapStateToProps = (state) => {
 //receives the dispatch function as arg
 const mapDispatchToProps = (dispatch) => {
     return {
-        onCreateNote: (note) => dispatch(noteActionCreator.addNote(note)),
+        onCreateNote: (note) => dispatch(noteActionCreator.addNotes(note)),
         onDeleteNote: (id) => dispatch(noteActionCreator.deleteNotes(id)),
         onUpdateNote: (note) => dispatch(noteActionCreator.updateNotes(note)),
         loadingNotes: () => dispatch(noteActionCreator.loadNotes()),
-        onCreateQuestion: (question) => dispatch(questionActionCreator.addQuestion(question)),
+        onCreateQuestion: (question) => dispatch(questionActionCreator.addQuestions(question)),
         onDeleteQuestion: (id) => dispatch(questionActionCreator.deleteQuestions(id)),
         loadingQuestions: () => dispatch(questionActionCreator.loadQuestions()),
         loadClasses: () => dispatch(classesActionCreator.loadClassesForStudent()),

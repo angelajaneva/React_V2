@@ -9,12 +9,13 @@ const NoteAdd = (props) => {
     const onFormSubmit = (e) => {
         e.preventDefault();
         const newNote = {
-            "id": e.target.classID.value,
+            "classId": e.target.classID.value,
             "title": e.target.title.value,
             "description": e.target.description.value
         };
+
         props.onNewTermAdded(newNote);
-        history.push("/notes");
+        history.push("/" + newNote.classId + "/notes");
     };
 
 

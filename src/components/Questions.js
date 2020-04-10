@@ -1,10 +1,11 @@
 import React from 'react'
 import Question from "./Question";
-import {useParams} from "react-router-dom";
+import {useParams, useHistory} from "react-router-dom";
 
 const Questions = (props) => {
 
     const {classId} = useParams();
+    const history = useHistory();
 
 
     function getQuestions() {
@@ -27,6 +28,15 @@ const Questions = (props) => {
                 {/*<hr/>*/}
                 <div className="my-sm-n3">
                     <div className="mt-4">
+                        <div className="ml-4 form-inline">
+                            <button className="btn-light card" style={{width: '30%'}} onClick={() => {
+                                history.push("/question/new")
+                            }}>
+                                Click to ask
+                            </button>
+                            {/*<input type="text" className="card  ml-xl-5" placeholder=" Search"*/}
+                            {/*       style={{width: '30%', height:''}}/>*/}
+                        </div>
                         {getQuestions()}
                     </div>
                 </div>
