@@ -1,6 +1,6 @@
 import React from 'react'
 import {useHistory} from "react-router-dom";
-import Navigation from "./Navigation";
+import Navigation from "./Class/Navigation";
 
 const NoteAdd = (props) => {
 

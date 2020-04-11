@@ -8,8 +8,8 @@ const Question = (props) => {
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
-        axios.get("/" + props.id + "/comments").then((data) => {
-            setComments(data.data)
+        axios.get(`http://all.local/_Projects/Freelancing/angrus/api/comment.php?id=${props.id}`).then((data) => {
+            setComments(data.data);
         })
     }, []);
 

@@ -2,7 +2,7 @@ import React from 'react'
 
 const Page = (props) => {
     return (
-        <div className={"page " + props.title.toLowerCase()}>
+        <div className={"page " + (props.styles ? props.styles : props.title.toLowerCase())}>
             <div className={"page-header"}>
                 {props.title}
             </div>

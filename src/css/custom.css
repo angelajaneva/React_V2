@@ -1,3 +1,11 @@
+html,
+body,
+#root,
+.app-wrapper,
+.wrapper {
+    height: 100%;
+}
+
 .page {
     width: 100%;
     display: block;
@@ -9,6 +17,7 @@
     padding: 15px;
     background-color: #FFF;
     box-shadow: 0 0 6px #00000038;
+    font-weight: bold;
 }
 
 /* todos */
@@ -83,4 +92,60 @@
 .todos .todo .todo-body .form-group {
     margin: 0;
     width: 100%;
+}
+
+/* classes */
+.content .content-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 15px 0;
+}
+.content .content-navigation ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.content .content-navigation ul a {
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 2px solid #000;
+    margin-left: 10px;
+}
+.content .content-navigation ul a:last-of-type {
+    border-right: 0 solid #e0e0e0;
+}
+.content .notes-list {
+    display: flex;
+}
+.content .notes-list .notes-list-holder {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    background-color: #FFF;
+}
+.content .notes-list .notes-list-holder .search-control {
+    padding: 30px;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    height: 80px;
+}
+.content .notes-list .notes-list-holder .note-side-holder {
+    padding: 15px;
+    border-left: 5px solid #000;
+    border-bottom: 1px solid #e0e0e0;
+}
+.content .notes-list .notes-list-holder .note-side-holder:hover {
+    background-color: #f6f6f6;
+    cursor: pointer;
+}
+.content .notes-list .notes-list-holder .note-side-holder:last-of-type {
+    border-bottom: 0 solid #e0e0e0;
+}
+.content .notes-list .notes-list-holder .note-side-holder h5 {
+    color: #828282;
+    font-size: 18px;
 }

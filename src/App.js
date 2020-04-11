@@ -12,11 +12,11 @@ import Header from './components/Header';
 import Home from './components/Home'
 import Sidebar from "./components/Sidebar";
 import NoteEdit from "./components/NoteEdit";
-import Cards from "./components/Cards";
+import Notes from "./components/Class/Notes/Notes";
 import Questions from "./components/Questions";
 import NoteAdd from "./components/NoteAdd"
 import ToDo from "./components/Todos/ToDo"
-import Content from "./components/Content";
+import Content from "./components/Class/Content";
 import QuestionAdd from "./components/QuestionAdd";
 
 class App extends Component {
@@ -34,7 +34,7 @@ class App extends Component {
         this.props.loadingNotes();
         this.props.loadingQuestions();
         this.props.loadClasses();
-        this.props.loadToDos();
+        // this.props.loadToDos();
     }
 
 
@@ -57,7 +57,7 @@ class App extends Component {
 //sekade kaj so ima this.createNote --> this.props.onCreateNote isto za site metodi
     render() {
         return (
-            <div>
+            <div className={"app-wrapper"}>
                 <Router>
 
                     <Route path={"/"} exact render={() =>
@@ -80,13 +80,12 @@ class App extends Component {
                     }/>
 
                     <Route path={"/:classId/notes"} exact render={(props) =>
-                        <div className={"wrapper d-flex align-items-stretch"} id="">
+                        <div className={"wrapper d-flex align-items-stretch"}>
                             <Sidebar subjects={this.props.classes}/>
-                            <div id="content" className="p-4 p-md-5 pt-5">
-                                <Content id={props.match.params.classId}/>
-                                <Cards cards={this.props.notes} onDelete={this.props.onDeleteNote}/>
-                                {/*onDelete={this.deleteNotes}*/}
-                            </div>
+                            <Notes cards={this.props.notes}
+                                   id={props.match.params.classId}
+                                   onDelete={this.props.onDeleteNote}
+                            />
                         </div>
                     }/>
 
