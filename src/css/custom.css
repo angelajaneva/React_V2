@@ -1,0 +1,86 @@
+.page {
+    width: 100%;
+    display: block;
+    background-color: #f8f9fa;
+}
+
+.page .page-header {
+    font-size: 18px;
+    padding: 15px;
+    background-color: #FFF;
+    box-shadow: 0 0 6px #00000038;
+}
+
+/* todos */
+.todos .todos-options {
+    padding: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.todos .todos-options-left {
+    display: flex;
+    align-items: center;
+}
+.todos .todos-options-right {
+    display: flex;
+    align-items: center;
+}
+.todos .todos-options a {
+    border-right: 1px solid #e0e0e0;
+    padding: 0 15px;
+}
+.todos .todos-options a:last-of-type {
+    border-right: 0 solid #e0e0e0;
+}
+.todos .todos-options .todos-options-search {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #FFF;
+    width: 100%;
+    margin-top: 10px;
+}
+@media (min-width: 768px){
+    .todos .todos-options .todos-options-search {
+        width: auto;
+        margin-top: 0;
+    }
+}
+.todos .todo {
+    background-color: #FFF;
+    box-shadow: 0 0 6px #00000026;
+    margin-bottom: 20px;
+    border-left: 5px solid #000;
+}
+.todos .todo-wrapper {
+    padding: 15px;
+}
+.todos .todo .todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.todos .todo .todo-header .todo-header-title {
+    display: flex;
+    align-items: center;
+    color: #c9c9c9;
+    font-size: 18px;
+}
+.todos .todo .todo-header .todo-header-options {
+    display: flex;
+}
+.todos .todo .todo-header .todo-header-options button {
+    margin-right: 5px;
+}
+.todos .todo .todo-body {
+    display: flex;
+    width: calc(100% - 22px);
+    margin-left: auto;
+    margin-top: 10px;
+}
+.todos .todo .todo-body .form-group {
+    margin: 0;
+    width: 100%;
+}

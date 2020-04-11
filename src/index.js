@@ -14,6 +14,7 @@ import './css/style.css'
 import './css/themify-icons.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style2.css'
+import './css/custom.css'
 import './css/bootstrap.min.css'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
