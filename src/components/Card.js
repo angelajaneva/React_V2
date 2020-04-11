@@ -13,9 +13,9 @@ const Card = (props) => {
                 <header className="w-container w-light-gray">
                     <h4 className="mt-3">{props.title}</h4>
                     <div className="mt-lg-n4 fa-pull-right pr-3">
-                        <input type="file" className=""/>
+                        {/*<input type="file" className=""/>*/}
                         {/*ti-clip pr-2*/}
-                        <a href="#" className="ti-share pr-2" title="Сподели"/>
+                        {/*<a href="#" className="ti-share pr-2" title="Сподели"/>*/}
                         <Link to={"/" + props.classId + "/" + props.id + "/edit"} className="ti-pencil-alt pr-2" title="Уреди"/>
                         <a href="#" onClick={deleteHandler} className="ti-trash pr-2" title="Избриши"/>
                     </div>

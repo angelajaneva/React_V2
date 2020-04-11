@@ -16,7 +16,7 @@ const Questions = (props) => {
         return newRef.map(question => {
             return (
                 <Question key={question.id} text={question.text} firstName={question.student.firstName}
-                          lastName={question.student.lastName}/>
+                          lastName={question.student.lastName} id={question.id} comments={props.comments} show={props.show}/>
             )
         })
     }
@@ -31,9 +31,7 @@ const Questions = (props) => {
                         <div className="ml-4 form-inline">
                             <button className="btn-light card" style={{width: '30%'}} onClick={() => {
                                 history.push("/question/new")
-                            }}>
-                                Click to ask
-                            </button>
+                            }}>Click to ask</button>
                             {/*<input type="text" className="card  ml-xl-5" placeholder=" Search"*/}
                             {/*       style={{width: '30%', height:''}}/>*/}
                         </div>

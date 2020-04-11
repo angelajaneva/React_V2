@@ -26,7 +26,7 @@ class App extends Component {
         this.state = {
             editingTodo: false,
             notEditing: true,
-            subject: ""
+            showComments: false
         }
     }
 
@@ -43,6 +43,13 @@ class App extends Component {
             ...this.state,
             notEditing: !this.state.notEditing,
             editingTodo: !this.state.editingTodo
+        })
+    };
+
+    clickForComments = () => {
+        this.setState({
+            ...this.state,
+            showComments: !this.state.showComments
         })
     };
 
@@ -88,7 +95,8 @@ class App extends Component {
                             <Sidebar subjects={this.props.classes}/>
                             <div id="content" className="p-4 p-md-5 pt-5">
                                 <Content id={props.match.params.classId}/>
-                                <Questions questions={this.props.questions} onDelete={this.props.onDeleteQuestion}/>
+                                <Questions questions={this.props.questions} comments={this.clickForComments}
+                                           show={this.state.showComments} onDelete={this.props.onDeleteQuestion}/>
                             </div>
                         </div>
                     }/>
@@ -99,7 +107,7 @@ class App extends Component {
                             <Sidebar subjects={this.props.classes}/>
                             <div id="content" className="p-4 p-md-5 pt-5">
                                 <Content id={props.match.params.classId}/>
-                                <NoteEdit onSubmitt={this.props.onUpdateNote} id={props.match.params.classId}/>
+                                <NoteEdit onSubmit={this.props.onUpdateNote} id={props.match.params.classId}/>
                             </div>
                         </div>
 

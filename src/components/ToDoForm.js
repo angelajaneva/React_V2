@@ -33,7 +33,6 @@ const Form = (props) => {
         const paramValue = e.target.text;
         setToDo({paramName: paramValue});
         setText(e.target.text)
-        {console.log("vo handler " + e.target.text.value)}
     };
 
 
@@ -54,7 +53,7 @@ const Form = (props) => {
                     {props.not && <p>{props.todo.text}{console.log("vo drug del")}</p>}
                     {/*//tuka e problemot posto e conditional rendering, treba inputot da se smeste vo nesto*/}
                     {/*//i na formSumbit da ne bide e.target.text... tuku toa vo koe kje bide smesten inputot*/}
-                    {props.edit && <div className="">
+                    {<div className="">
                         <div className="form-group">
                             <textarea name={"text"} className="form-control" rows="7"
                             value={toDo.text} onChange={onChangeHandler} />

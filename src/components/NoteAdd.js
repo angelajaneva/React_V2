@@ -20,11 +20,10 @@ const NoteAdd = (props) => {
 
 
     return (
-      <div className="w-card-4 p-4 p-md-5 pt-5">
-          <h3 className="mb-5">Full name of the class{}</h3>
+      <div className="w-card-4 p-4 p-md-5 pt-5" id="content">
           <Navigation/>
 
-          <div className="card card-warning">
+          <div className="mt-4 card card-warning">
               <div className="card-body">
                   <form onSubmit={onFormSubmit}>
                       <div className="">
@@ -54,7 +53,8 @@ const NoteAdd = (props) => {
                       <hr/>
                       <div>
                           <button type="submit" className="btn btn-light">Submit</button>
-                          <button type="submit" className="btn btn-light float-right">Cancel</button>
+                          <button type="submit" className="btn btn-light float-right"
+                                  onClick={history.push("/home")}>Cancel</button>
                       </div>
 
                   </form>

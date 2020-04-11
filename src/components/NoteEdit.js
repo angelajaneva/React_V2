@@ -7,7 +7,7 @@ import {useHistory} from "react-router-dom";
 const NoteEdit = (props) => {
 
     const history = useHistory();
-    const [note, setNote] = useState({});
+    const [note, setNote] = useState({description: '', title: ''});
     const {noteId} = useParams();
 
     useEffect(() => {
@@ -18,19 +18,19 @@ const NoteEdit = (props) => {
 
     const onFormSubmit = (e) => {
         e.preventDefault();
-        props.onSubmitt({
+        const editedNote = {
             "id": noteId,
             "title": e.target.title.value,
             "description": e.target.description.value
-        });
+        };
+        props.onSubmit(editedNote);
         history.push("/" + props.id + "/notes");
     };
 
 
     const onChangeHandler = (e) => {
-        const paramName = e.target.title;
-        const paramValue = e.target.description;
-        setNote({paramName: paramValue});
+        const paramValue = e.target.value;
+        setNote({...note, [e.target.name]: paramValue});
     };
 
 
@@ -61,13 +61,13 @@ const NoteEdit = (props) => {
                         <hr/>
                         <div>
                             <button type="submit" className="btn btn-light">Submit</button>
-                            <button type="submit" className="btn btn-light float-right">Cancel</button>
+                            <button type="submit" className="btn btn-light float-right" onClick={history.push("/" + props.id + "/notes")}>Cancel</button>
                         </div>
 
                     </form>
                 </div>
             </div>
-         </div>
+        </div>
     )
 };
 

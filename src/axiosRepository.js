@@ -60,7 +60,6 @@ const service = {
         const data = {
             ...question
         };
-        // {console.log("vo axios repo " + note.aclass.id)}
         const formParams = qs.stringify(data);
         return axios.post("/question", formParams, {
             headers: {
