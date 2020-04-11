@@ -15,7 +15,7 @@ import NoteEdit from "./components/NoteEdit";
 import Cards from "./components/Cards";
 import Questions from "./components/Questions";
 import NoteAdd from "./components/NoteAdd"
-import ToDo from "./components/ToDo"
+import ToDo from "./components/Todos/ToDo"
 import Content from "./components/Content";
 import QuestionAdd from "./components/QuestionAdd";
 
