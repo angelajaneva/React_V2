@@ -29,14 +29,12 @@ class App extends Component {
     }
 
     componentDidMount() {
-        // this.props.loadingNotes();
-        // this.props.loadingQuestions();
-        // this.props.loadClasses();
-        this.props.loadToDos();
+        this.props.loadingNotes();
+        this.props.loadingQuestions();
+        this.props.loadClasses();
+        // this.props.loadToDos();
     }
 
-//sekade kaj so se koriste this.state.notes sea da se zamene so this.props.nts
-//sekade kaj so ima this.createNote --> this.props.onCreateNote isto za site metodi
     render() {
         return (
             <div className={"app-wrapper"}>

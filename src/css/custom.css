@@ -275,6 +275,14 @@ body,
     font-weight: bold;
     color: #CCC;
 }
+.content .question .questions-comment-form {
+    margin-bottom: 15px;
+    display: flex;
+    width: 100%;
+    align-items: flex-end;
+    background-color: #ececec;
+    padding: 15px;
+}
 
 /* reviews */
 .reviews .review {

@@ -101,7 +101,6 @@ const service = {
 
     searchTodo: (searchTerm) => {
         return axios.get(`/todo/search?term=${searchTerm}`);
-
     },
     getReviews: () => {
         return axios.get("http://all.local/_Projects/Freelancing/angrus/api/reviews.php");
