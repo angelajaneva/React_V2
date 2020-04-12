@@ -53,8 +53,9 @@ const NoteAdd = (props) => {
                       <hr/>
                       <div>
                           <button type="submit" className="btn btn-light">Submit</button>
-                          <button type="submit" className="btn btn-light float-right"
-                                  onClick={history.push("/home")}>Cancel</button>
+                          <button type="submit" className="btn btn-light float-right">
+                              Cancel
+                          </button>
                       </div>
 
                   </form>

@@ -267,3 +267,59 @@ body,
     font-weight: bold;
     color: #CCC;
 }
+
+/* reviews */
+.reviews .review {
+    position: relative;
+    margin-bottom: 50px;
+    background-color: #e4e4e4;
+}
+.reviews .review:first-of-type {
+    margin-top: 25px;
+}
+.reviews .review:not(:last-of-type):after {
+    content: "";
+    position: absolute;
+    bottom: -27px;
+    left: 50%;
+    width: 98%;
+    height: 2px;
+    background-color: #c7c7c7;
+    border-radius: 5px;
+    transform: translateX(-50%);
+}
+.reviews .review-holder {
+    position: relative;
+    background-color: #FFF;
+    border-radius: 5px;
+    border: 1px solid #ffc107;
+    padding: 20px;
+}
+.reviews .review-holder .review-holder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.reviews .review-holder .review-holder-header > div {
+    display: flex;
+    align-items: center;
+}
+.reviews .review-holder .review-holder-header img {
+    width: 50px;
+    margin-right: 20px;
+}
+.reviews .review-holder .review-holder-body {
+    font-size: 14px;
+    margin-top: 15px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 15px;
+}
+
+/* component not found */
+.not-found {
+    padding: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #c1c1c1;
+}

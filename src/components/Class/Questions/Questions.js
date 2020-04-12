@@ -16,7 +16,7 @@ const Questions = (props) => {
         }
     });
 
-    function getQuestions() {
+    const getQuestions = () =>{
         const newRef = props.questions.filter(question => {
             return question.aclass.id === classId;
         });

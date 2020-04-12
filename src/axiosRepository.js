@@ -27,7 +27,6 @@ const service = {
         const data = {
             ...note
         };
-        // {console.log("vo axios repo " + note.aclass.id)}
         const formParams = qs.stringify(data);
         return axios.post("/note", formParams, {
             headers: {
@@ -40,11 +39,12 @@ const service = {
         const data = {
             ...note
         };
-        const noteId = note.id;
+
+        {console.log(note.noteId)}
         const formParams = qs.stringify(data);
-        return axios.patch("/" + noteId, formParams, {
+        return axios.patch("/note/edit", formParams, {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
             }
         })
     },
@@ -73,7 +73,7 @@ const service = {
         const data = {
             ...todo
         };
-        const todoId = todo.id;
+        const todoId = todo.todoId;
         const formParams = qs.stringify(data);
 
         return axios.patch("/todo/" + todoId, formParams, {
@@ -81,7 +81,32 @@ const service = {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
+    },
+
+    createTodo: (todo) => {
+        const data = {
+            ...todo
+        };
+        const formParams = qs.stringify(data);
+        return axios.post("/todo", formParams, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+    },
+
+    deleteTodo: (id) => {
+        return axios.delete("/todo/" + id);
+    },
+
+    searchTodo: (searchTerm) => {
+        return axios.get(`/todo/search?term=${searchTerm}`);
+
     }
+    },
+    getReviews: () => {
+        return axios.get("http://all.local/_Projects/Freelancing/angrus/api/reviews.php");
+    },
 };
 
 export default service;

@@ -7,6 +7,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import classReducer from './store/reducers/classSection-reducer'
 import toDoReducer from './store/reducers/toDo-reducer'
+import reviewsReducer from './store/reducers/reviews-reducer'
 
 import './index.css';
 import './css/all.css'
@@ -21,7 +22,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const reducer = combineReducers({
 
     "classReducer": classReducer,
-    "toDoReducer": toDoReducer
+    "toDoReducer": toDoReducer,
+    "reviewsReducer": reviewsReducer
 });
 
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));

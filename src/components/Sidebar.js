@@ -3,7 +3,6 @@ import {Link} from "react-router-dom";
 import Collapsible from 'react-collapsible'
 
 const Sidebar = (props) => {
-
     const getClasses = () => {
         return props.subjects.map(subject => {
             return (
@@ -19,10 +18,6 @@ const Sidebar = (props) => {
     return (
         <div className="d-flex">
             <nav id="sidebar">
-                {/*// <!--        <div class="custom-menu">-->*/}
-                {/*// <!--            <button type="button" id="sidebarCollapse" class="btn btn-primary">-->*/}
-                {/*// <!--            </button>-->*/}
-                {/*// <!--        </div>-->*/}
                 <div className="img bg-wrap text-center py-4">
                     {/*style="background-image: url(images/bg_1.jpg);"*/}
                     <div className="user-logo">
@@ -35,9 +30,11 @@ const Sidebar = (props) => {
                         <Link to="/"><span className="ti-home mr-3"/> Home</Link>
                     </li>
                     <li>
-                        <Collapsible trigger={<Link to={"/home"}>
-                            <span className="mr-3 my-3">My Classes</span><span
-                            className="far fa-pull-right ti-angle-down"/>
+                        <Collapsible trigger={<Link to={"/home"} className={"d-flex align-items-center justify-content-between"}>
+                            <span>
+                                <i className="fa fa-list mr-3 my-3"></i> My Classes
+                            </span>
+                            <span className="far fa-pull-right ti-angle-down"/>
                         </Link>
                         } open={true}>
                             <ul className="list-unstyled components ml-3">
@@ -45,21 +42,17 @@ const Sidebar = (props) => {
                             </ul>
                         </Collapsible>
                     </li>
-
                     <li>
                         <Link to={"/todo"}><span className="ti-pencil-alt mr-3"/>Todos</Link>
                     </li>
-
                     <li>
-                        <Link to="#"><span className="ti-book mr-3"/> Reviews</Link>
+                        <Link to={"/reviews"}><i className="fa fa-comments mr-3"/> Reviews</Link>
                     </li>
-
                     <li>
-                        <Link to="#"><span className=""/> Sign Out</Link>
+                        <Link to="#"><i className="fa fa-sign-out-alt mr-3"/> Sign Out</Link>
                     </li>
                 </ul>
             </nav>
-            {/*Page Content*/}
         </div>
     )
 };

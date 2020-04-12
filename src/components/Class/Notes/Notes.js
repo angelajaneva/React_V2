@@ -9,13 +9,14 @@ const Notes = (props) => {
     const [name, setName] = useState();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [id, setId] = useState("");
     const [isEdit, setIsEdit] = useState(false);
     const [isNew, setIsNew] = useState(false);
 
     useEffect(() => {
         let getClass = props.classes.filter(item => item.id === props.id)[0];
 
-        if(getClass){
+        if (getClass) {
             setName(getClass.name);
         }
     });
@@ -26,24 +27,26 @@ const Notes = (props) => {
 
         setTitle("");
         setDescription("");
-        if(note){
+        if (note) {
             setTitle(note.title);
             setDescription(note.description);
+            setId(note.id)
         }
     };
 
     const saveNote = () => {
         let note = {
+            "noteId": id,
             "classId": classId,
             "title": title,
             "description": description
         };
 
-        if(isNew){
+        if (isNew) {
             setTitle("");
             setDescription("");
             props.onNewTermAdded(note);
-        }else {
+        } else {
             props.updateNote(note);
         }
 
@@ -52,31 +55,35 @@ const Notes = (props) => {
         props.loadNotes();
     };
 
+    const getNotes = () => {
+        const newRef = props.cards.filter(note => {
+            return note.aclass.id === classId;
+        });
+        return newRef.map(note => {
+            return (
+                <Note key={note.id}
+                      note={note}
+                      onDelete={props.onDelete}
+                      classId={classId}
+                      openNote={openNote}
+                />
+            )
+        })
+
+    };
+
     return (
         <Page title={name} styles={"content"}>
-            <Navigation classId={classId} />
+            <Navigation classId={classId}/>
             <div className="notes-list">
                 <div className={"notes-list-holder"}>
-                    <input className="form-control search-control" placeholder={"Search"} />
-                    {
-                        props.cards.filter(note => {
-                            return note.aclass.id === classId;
-                        }).map(note => {
-                            return (
-                                <Note key={note.id}
-                                      note={note}
-                                      onDelete={props.onDelete}
-                                      classId={classId}
-                                      openNote={openNote}
-                                />
-                            )
-                        })
-                    }
+                    <input className="form-control search-control" placeholder={"Search"}/>
+                    {getNotes()}
                 </div>
                 <div className={"notes-list-read"}>
                     <div className={"notes-list-read-options"}>
                         <button className={"btn btn-primary"} onClick={() => openNote(null, true, true)}>
-                            <i className={"fa fa-plus"} aria-hidden="false"></i> Add Note
+                            <i className={"fa fa-plus"} aria-hidden="false"/> Add Note
                         </button>
                     </div>
                     <div className={"notes-list-read-body"}>

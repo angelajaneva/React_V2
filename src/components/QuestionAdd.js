@@ -44,8 +44,8 @@ const QuestionAdd = (props) => {
                         <hr/>
                         <div>
                             <button type="submit" className="btn btn-light">Submit</button>
-                            <button type="submit" className="btn btn-light float-right"
-                                    onClick={history.push("/home")}>Cancel
+                            <button type="submit" className="btn btn-light float-right">
+                                Cancel
                             </button>
                         </div>
 

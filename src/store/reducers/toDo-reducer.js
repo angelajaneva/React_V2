@@ -1,14 +1,16 @@
 import * as actionTYPE from '../actions'
 
 const initialState = {
-    toDos: []
+    toDos: [],
+    searched_toDos: []
 };
 const reducer = (state = initialState, action) => {
 
     if (action.type === actionTYPE.SET_TODOs) {
         return {
             ...state,
-            toDos: action.toDos
+            toDos: action.toDos,
+            searched_toDos: action.toDos
         }
     }
     if (action.type === actionTYPE.EDIT_TODO) {
@@ -22,6 +24,29 @@ const reducer = (state = initialState, action) => {
             toDos: newRef
         }
     }
+
+    if (action.type === actionTYPE.CREATE_TODO) {
+        return {
+            ...state,
+            toDos: state.toDos.concat(action.toDo)
+        };
+    }
+
+    if (action.type === actionTYPE.DELETE_TODO) {
+        const newRef = state.toDos.filter((todo) => todo.id !== action.todoId);
+        return {
+            ...state,
+            toDos: newRef
+        };
+    }
+
+    if (action.type === actionTYPE.SEARCH_TODOs) {
+        return {
+            ...state,
+            searched_toDos: action.data
+        }
+    }
+
     return state;
 };
 

@@ -15,6 +15,7 @@ import Notes from "./components/Class/Notes/Notes";
 import Questions from "./components/Class/Questions/Questions";
 import ToDo from "./components/Todos/ToDo"
 import QuestionAdd from "./components/QuestionAdd";
+import Reviews from "./components/Reviews/Reviews";
 
 class App extends Component {
     constructor(props) {
@@ -33,22 +34,6 @@ class App extends Component {
         this.props.loadClasses();
         this.props.loadToDos();
     }
-
-
-    clickForEdit = () => {
-        this.setState({
-            ...this.state,
-            notEditing: !this.state.notEditing,
-            editingTodo: !this.state.editingTodo
-        })
-    };
-
-    clickForComments = () => {
-        this.setState({
-            ...this.state,
-            showComments: !this.state.showComments
-        })
-    };
 
 //sekade kaj so se koriste this.state.notes sea da se zamene so this.props.nts
 //sekade kaj so ima this.createNote --> this.props.onCreateNote isto za site metodi
@@ -104,9 +89,21 @@ class App extends Component {
                     <Route path={"/todo"}>
                         <div className={"wrapper d-flex align-items-stretch"} id="content">
                             <Sidebar subjects={this.props.classes}/>
-                            <ToDo todos={this.props.toDos} edit={this.state.editingTodo}
-                                  not={this.state.notEditing} onClickHandler={this.clickForEdit}
-                                  onSubmit={this.props.onUpdateToDo}/>
+                            <ToDo todos={this.props.toDos} onDelete={this.props.onDeleteToDo}
+                                  onSubmit={this.props.onUpdateToDo} onSearch={this.props.onSearchToDo}
+                                  searchedToDos={this.props.searched_toDos}/>
+                        </div>
+                    </Route>
+                    <Route path={"/reviews"}>
+                        <div className={"wrapper d-flex align-items-stretch"} id="content">
+                            <Sidebar subjects={this.props.classes}/>
+                            <Reviews />
+                        </div>
+                    </Route>
+                    <Route path={"/reviews"}>
+                        <div className={"wrapper d-flex align-items-stretch"} id="content">
+                            <Sidebar subjects={this.props.classes}/>
+                            <Reviews />
                         </div>
                     </Route>
                 </Router>
@@ -121,7 +118,8 @@ const mapStateToProps = (state) => {
         notes: state.classReducer.notes,
         questions: state.classReducer.questions,
         classes: state.classReducer.classes,
-        toDos: state.toDoReducer.toDos
+        toDos: state.toDoReducer.toDos,
+        searched_toDos: state.toDoReducer.searched_toDos
     }
 };
 //receives the dispatch function as arg
@@ -135,8 +133,11 @@ const mapDispatchToProps = (dispatch) => {
         onDeleteQuestion: (id) => dispatch(questionActionCreator.deleteQuestions(id)),
         loadingQuestions: () => dispatch(questionActionCreator.loadQuestions()),
         loadClasses: () => dispatch(classesActionCreator.loadClassesForStudent()),
-        onUpdateToDo: (toDo) => dispatch(toDoActionCreator.updateToDo(toDo)),
+        onUpdateToDo: (toDo) => dispatch(toDoActionCreator.updateToDos(toDo)),
         loadToDos: () => dispatch(toDoActionCreator.loadToDos()),
+        onDeleteToDo: (id) => dispatch (toDoActionCreator.deleteToDos(id)),
+        onCreateToDo: (toDo) => dispatch (toDoActionCreator.createToDos(toDo)),
+        onSearchToDo: (term) => dispatch (toDoActionCreator.searchToDos(term))
     };
 };
 

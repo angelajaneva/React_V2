@@ -23,17 +23,17 @@ const Note = (props) => {
         <div className="note-side-holder" onClick={openHandler}>
             <h5>{props.note.title}</h5>
             <div>
-                <button title="Уреди"
+                <button title="Edit"
                         onClick={editHandler}
                         className={"btn btn-link text-dark border rounded-0 mr-1"}
                 >
-                    <i className="ti-pencil-alt" aria-hidden="false"></i>
+                    <i className="ti-pencil-alt" aria-hidden="false"/>
                 </button>
-                <button title="Уреди"
+                <button title="Delete"
                         onClick={deleteHandler}
                         className={"btn btn-link text-dark border rounded-0 mr-1"}
                 >
-                    <i className="ti-trash" aria-hidden="false"></i>
+                    <i className="ti-trash" aria-hidden="false"/>
                 </button>
             </div>
         </div>

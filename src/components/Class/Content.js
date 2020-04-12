@@ -7,7 +7,7 @@ const Content = (props) => {
     const [name, setName] = useState();
 
     useEffect(() => {
-        axios.get("http://localhost/_Projects/Freelancing/angrus/api/class.php?id=" + props.id).then(data => {
+        axios.get("/class/" + props.id).then(data => {
             setName(data.data)
         })
     });

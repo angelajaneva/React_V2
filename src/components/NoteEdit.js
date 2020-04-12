@@ -14,7 +14,7 @@ const NoteEdit = (props) => {
         axios.get("/note/" + noteId).then((data) => {
             setNote(data.data)
         })
-    }, []);
+    }, [noteId]);
 
     const onFormSubmit = (e) => {
         e.preventDefault();
@@ -61,7 +61,7 @@ const NoteEdit = (props) => {
                         <hr/>
                         <div>
                             <button type="submit" className="btn btn-light">Submit</button>
-                            <button type="submit" className="btn btn-light float-right" onClick={history.push("/" + props.id + "/notes")}>Cancel</button>
+                            <button type="submit" className="btn btn-light float-right">Cancel</button>
                         </div>
 
                     </form>

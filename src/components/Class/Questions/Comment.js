@@ -1,15 +1,10 @@
 import React from 'react'
 
-const Comment = () => {
+const Comment = (props) => {
     return (
         <div className="comment">
             <div className="comment-body">
-                <p>In this chapter, we first study the fundamentals of the relational model. A" +
-                    "substantial theory exists for relational databases.We study the part of this theory " +
-                    "dealing with queries in Chapter 6. In Chapters 7 through 8, we shall examine " +
-                    "aspects of database theory that help in the design of relational database schemas, " +
-                    "while in Chapters 12 and 13we discuss aspects of the theory dealingwith efficient " +
-                    "processing of queries.</p>
+                <p>{props.text}.</p>
 
             </div>
             <hr/>

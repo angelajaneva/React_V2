@@ -18,7 +18,7 @@ export const createToDo = (todo) => {
 export const deleteToDo = (id) => {
     return {
         type: actionTYPES.DELETE_TODO,
-        toDoId: id
+        todoId: id
     }
 };
 
@@ -28,6 +28,14 @@ export const updateToDo = (todo) => {
         toDo: todo
     }
 };
+
+export const searchToDo = (data) => {
+    return {
+        type: actionTYPES.SEARCH_TODOs,
+        data: data
+    }
+};
+
 
 //async
 export const loadToDos = () => {
@@ -46,4 +54,30 @@ export const updateToDos = (edited) => {
             dispatch(updateToDo(response.data))
         })
     }
-}
+};
+
+export const createToDos = (todo) => {
+    return dispatch => {
+        service.createTodo(todo).then((response) => {
+            dispatch(createToDo(response.data));
+        })
+    }
+};
+
+
+export const deleteToDos = (id) => {
+    return dispatch => {
+        service.deleteTodo(id).then(() => {
+            dispatch(deleteToDo(id));
+        })
+    }
+};
+
+export const searchToDos = (term) => {
+    return dispatch => {
+        service.searchTodo(term).then((response) => {
+            dispatch(setToDo(response.data));
+            loadToDos()
+        })
+    }
+};

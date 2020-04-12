@@ -10,29 +10,27 @@ const Form = (props) => {
     const [isEdit, setIsEdit] = useState(false);
 
     useEffect(() => {
-        axios.get("http://all.local/_Projects/Freelancing/angrus/api/todo.php?todo=" + todoId).then((data) => {
+        axios.get("/todo/" + todoId).then((data) => {
             setToDo(data.data);
         })
-    }, []);
+    },
+        [todoId]);
 
     const onFormSubmit = (e) => {
         e.preventDefault();
 
-        axios.get("post-url", {
-            "id": todoId,
+        props.onSubmit({
+            "todoId": todoId,
             "text": text,
             "done": checked
-        })
-            .then(response => {
-                checkIsEdit();
-            });
-
+        });
+        checkIsEdit();
     };
 
     const onChangeHandler = (e) => {
-        const paramValue = e.target.text;
-        setToDo({paramName: paramValue});
-        setText(e.target.text)
+        const paramValue = e.target.value || e.target.checked;
+        setToDo({...toDo, [e.target.name]: paramValue});
+        setText(e.target.value)
     };
 
     const checkIsEdit = () => {
@@ -42,6 +40,12 @@ const Form = (props) => {
     const checkboxCheck = (e) => {
         setChecked(e.target.checked);
     };
+
+    const deleteHandler = (e) => {
+        e.preventDefault();
+        props.onDelete(todoId);
+    };
+
 
     return (
         <div className="todo">
@@ -71,7 +75,9 @@ const Form = (props) => {
                                         onClick={checkIsEdit}
                                 />
                             ) : (
-                                <button className="btn-sm card ti-trash" />
+                                <button className="btn-sm card ti-trash"
+                                        onClick={deleteHandler}
+                                />
                             )
                         }
                     </div>

@@ -8,10 +8,11 @@ const Question = (props) => {
     const [showComments, setShowComments] = useState(false);
 
     useEffect(() => {
+
         axios.get(`/${props.id}/comments`).then((data) => {
             setComments(data.data)
         })
-    }, []);
+    }, [props.id]);
 
     const getComments = () => {
         return comments.length > 0 ? comments.map(comment => {
