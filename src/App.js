@@ -100,12 +100,6 @@ class App extends Component {
                             <Reviews />
                         </div>
                     </Route>
-                    <Route path={"/reviews"}>
-                        <div className={"wrapper d-flex align-items-stretch"} id="content">
-                            <Sidebar subjects={this.props.classes}/>
-                            <Reviews />
-                        </div>
-                    </Route>
                 </Router>
             </div>
         )
