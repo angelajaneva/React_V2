@@ -13,7 +13,7 @@ import Home from './components/Home'
 import Sidebar from "./components/Sidebar";
 import NoteEdit from "./components/NoteEdit";
 import Notes from "./components/Class/Notes/Notes";
-import Questions from "./components/Questions";
+import Questions from "./components/Class/Questions/Questions";
 import NoteAdd from "./components/NoteAdd"
 import ToDo from "./components/Todos/ToDo"
 import Content from "./components/Class/Content";
@@ -83,41 +83,52 @@ class App extends Component {
                         <div className={"wrapper d-flex align-items-stretch"}>
                             <Sidebar subjects={this.props.classes}/>
                             <Notes cards={this.props.notes}
+                                   classes={this.props.classes}
                                    id={props.match.params.classId}
                                    onDelete={this.props.onDeleteNote}
+                                   onNewTermAdded={this.props.onCreateNote}
+                                   loadNotes={this.props.loadingNotes}
+                                   updateNote={this.props.onUpdateNote}
                             />
                         </div>
                     }/>
 
                     <Route path={"/:classId/questions"} exact render={(props) =>
-                        <div className={"wrapper d-flex align-items-stretch"} id="">
+                        <div className={"wrapper d-flex align-items-stretch"}>
                             <Sidebar subjects={this.props.classes}/>
-                            <div id="content" className="p-4 p-md-5 pt-5">
-                                <Content id={props.match.params.classId}/>
-                                <Questions questions={this.props.questions} comments={this.clickForComments}
-                                           show={this.state.showComments} onDelete={this.props.onDeleteQuestion}/>
-                            </div>
+                            <Questions questions={this.props.questions}
+                                       classes={this.props.classes}
+                                       id={props.match.params.classId}
+                                       comments={this.clickForComments}
+                                       show={this.state.showComments}
+                                       onDelete={this.props.onDeleteQuestion}
+                            />
+                            {/*<div id="content" className="p-4 p-md-5 pt-5">*/}
+                                {/*<Content id={props.match.params.classId}/>*/}
+                                {/*<Questions questions={this.props.questions} comments={this.clickForComments}*/}
+                                           {/*show={this.state.showComments} onDelete={this.props.onDeleteQuestion}/>*/}
+                            {/*</div>*/}
                         </div>
                     }/>
 
 
-                    <Route path={"/:classId/:noteId/edit"} exact render={(props) =>
-                        <div className={"wrapper d-flex align-items-stretch"} id="content">
-                            <Sidebar subjects={this.props.classes}/>
-                            <div id="content" className="p-4 p-md-5 pt-5">
-                                <Content id={props.match.params.classId}/>
-                                <NoteEdit onSubmit={this.props.onUpdateNote} id={props.match.params.classId}/>
-                            </div>
-                        </div>
+                    {/*<Route path={"/:classId/:noteId/edit"} exact render={(props) =>*/}
+                        {/*<div className={"wrapper d-flex align-items-stretch"} id="content">*/}
+                            {/*<Sidebar subjects={this.props.classes}/>*/}
+                            {/*<div id="content" className="p-4 p-md-5 pt-5">*/}
+                                {/*<Content id={props.match.params.classId}/>*/}
+                                {/*<NoteEdit onSubmit={this.props.onUpdateNote} id={props.match.params.classId}/>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
 
-                    }/>
+                    {/*}/>*/}
 
-                    <Route path={"/note/new"} exact>
-                        <div className={"wrapper d-flex align-items-stretch"} id="content">
-                            <Sidebar subjects={this.props.classes}/>
-                            <NoteAdd onNewTermAdded={this.props.onCreateNote}/>
-                        </div>
-                    </Route>
+                    {/*<Route path={"/note/new"} exact>*/}
+                        {/*<div className={"wrapper d-flex align-items-stretch"} id="content">*/}
+                            {/*<Sidebar subjects={this.props.classes}/>*/}
+                            {/*<NoteAdd onNewTermAdded={this.props.onCreateNote}/>*/}
+                        {/*</div>*/}
+                    {/*</Route>*/}
 
                     <Route path={"/question/new"} exact>
                         <div className={"wrapper d-flex align-items-stretch"} id="content">

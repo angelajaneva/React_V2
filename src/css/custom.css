@@ -123,8 +123,9 @@ body,
 .content .notes-list .notes-list-holder {
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 40%;
     background-color: #FFF;
+    border-right: 1px solid #e0e0e0;
 }
 .content .notes-list .notes-list-holder .search-control {
     padding: 30px;
@@ -148,4 +149,33 @@ body,
 .content .notes-list .notes-list-holder .note-side-holder h5 {
     color: #828282;
     font-size: 18px;
+}
+.content .notes-list .notes-list-read {
+    display: flex;
+    width: 60%;
+    background-color: #FFF;
+    flex-direction: column;
+}
+.content .notes-list .notes-list-read .notes-list-read-options {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    height: 80px;
+    padding: 15px;
+}
+.content .notes-list .notes-list-read .notes-list-read-body {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+.content .notes-list .notes-list-read .notes-list-read-body div {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+.content .notes-list .notes-list-read .notes-list-read-body h3 {
+    padding: 0 0 15px 0;
+    border-bottom: 1px solid #e0e0e0;
 }

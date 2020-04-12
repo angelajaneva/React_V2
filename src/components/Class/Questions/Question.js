@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import Comment from "./Comment"
-import axios from "../custom-axios"
+import Comment from "../../Comment"
+import axios from "../../../custom-axios"
 import {Link} from "react-router-dom";
 
 const Question = (props) => {
@@ -27,7 +27,7 @@ const Question = (props) => {
                 <div className="w-container">
                     <div className="img bg-wrap ">
                         <div className="user-logo fa-pull-left pr-xl-5">
-                            <div className="img" style={{backgroundImage: 'url(' + require('./user.png') + ')'}}/>
+                            <div className="img" style={{backgroundImage: 'url(' + require('../../user.png') + ')'}}/>
                         </div>
                     </div>
                     <h6 className="text-left mt-4 ">{props.text}</h6>

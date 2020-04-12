@@ -8,7 +8,7 @@ const service = {
     },
 
     getQuestions: () => {
-        return axios.get("http://all.local/_Projects/Freelancing/angrus/api/notes.php")
+        return axios.get("http://all.local/_Projects/Freelancing/angrus/api/questions.php")
     },
 
     getNotesForClass: (classId) => {

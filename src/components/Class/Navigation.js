@@ -7,14 +7,14 @@ const Navigation = (props) => {
             <div>
                 <ul>
                     <li>
-                        <Link to={"/" + props.subject + "/notes"}
+                        <Link to={"/" + props.classId + "/notes"}
                               className="nav-link text-center"
                         >
                             Notes <span className="sr-only">(current)</span>
                         </Link>
                     </li>
                     <li>
-                        <Link to={"/" + props.subject + "/questions"}
+                        <Link to={"/" + props.classId + "/questions"}
                               className="nav-link text-center"
                         >
                             Ask a question
