@@ -128,23 +128,20 @@ const Todo = (props) => {
             {
                 newTodo ? (
                     <div className="todos-form">
-                        <div className={"form-group m-0"}>
+                        <div className={"form-group m-0 w-100"}>
                             <label className={"font-weight-bold"}>Todo</label>
-                            <input type={"text"}
-                                   placeholder={"Enter text"}
-                                   value={todo}
-                                   onChange={(e) => setTodo(e.target.value)}
-                                   className={"form-control"}
+                            <textarea rows="1"
+                                     placeholder={"Enter text"}
+                                     value={todo}
+                                     onChange={(e) => setTodo(e.target.value)}
+                                     className={"form-control"}
                             />
                         </div>
-                        <div className={"form-groupm-0"}>
-                            <label className={"font-weight-bold"}>&nbsp;</label>
-                            <button className={"btn btn-primary"}
-                                    onClick={saveTodo}
-                            >
-                                Save
-                            </button>
-                        </div>
+                        <button className={"btn btn-primary ml-1"}
+                                onClick={saveTodo}
+                        >
+                            Save
+                        </button>
                     </div>
                 ) : null
             }
