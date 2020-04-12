@@ -4,11 +4,11 @@ import qs from 'qs'
 const service = {
 
     getNotes: () => {
-        return axios.get("http://all.local/_Projects/Freelancing/angrus/api/notes.php")
+        return axios.get("/notes")
     },
 
     getQuestions: () => {
-        return axios.get("http://all.local/_Projects/Freelancing/angrus/api/questions.php")
+        return axios.get("/questions")
     },
 
     getNotesForClass: (classId) => {
@@ -16,7 +16,7 @@ const service = {
     },
 
     getClasses: () => {
-        return axios.get("http://localhost/_Projects/Freelancing/angrus/api/classes.php")
+        return axios.get("/classes/S17001")
     },
 
     getToDo: () => {

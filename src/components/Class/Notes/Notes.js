@@ -101,9 +101,18 @@ const Notes = (props) => {
                                                   onChange={(e) => setDescription(e.target.value)}
                                         />
                                     </div>
-                                    <button className={"btn btn-primary"} onClick={saveNote}>
-                                        Save
-                                    </button>
+                                    <div className={"form-group text-right"}>
+                                        <button className={"btn btn-primary mr-1"}
+                                                onClick={() => openNote(null, false, false)}
+                                        >
+                                            Close
+                                        </button>
+                                        <button className={"btn btn-primary"}
+                                                onClick={saveNote}
+                                        >
+                                            Save
+                                        </button>
+                                    </div>
                                 </div>
                             ) : (
                                 <div>
