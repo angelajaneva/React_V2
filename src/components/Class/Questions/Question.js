@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import Comment from "./Comment"
 import axios from "../../../custom-axios"
-import {Link} from "react-router-dom";
 
 const Question = (props) => {
     const [comments, setComments] = useState([]);
     const [showComments, setShowComments] = useState(false);
+    const [newComment, setNewComment] = useState(false);
+    const [comment, setComment] = useState("");
 
     useEffect(() => {
 
@@ -17,11 +18,29 @@ const Question = (props) => {
     const getComments = () => {
         return comments.length > 0 ? comments.map(comment => {
             return (
-                <Comment key={comment.id} text={comment.content} date={comment.createdOn}/>
+                <Comment key={comment.id} text={comment.content}
+                         date={comment.createdOn} student={comment.student}/>
             )
         }) : (
             <div className={"text-center font-weight-bold"}>No comments inserted yet.</div>
         );
+    };
+
+    const openCommentsForm = (e) => {
+        e.preventDefault();
+        setNewComment(!newComment);
+        setShowComments(true);
+    };
+
+    const showCommentsList = (e) => {
+        e.preventDefault();
+        setNewComment(false);
+        setShowComments(!showComments);
+    };
+
+    const saveComment = (e) => {
+        e.preventDefault();
+        // add save comment here
     };
 
     return (
@@ -33,8 +52,11 @@ const Question = (props) => {
                         <h5>{props.firstName} {props.lastName}</h5>
                     </div>
                     <div className="question-holder-header-right">
-                        <Link to={"#"} className="ti-comment mr-1" title="Write an answer"/>
-                        <button onClick={() => setShowComments(!showComments)}
+                        <button className="btn btn-link text-dark ti-comment mr-1"
+                                title="Write an answer"
+                                onClick={openCommentsForm}
+                        />
+                        <button onClick={showCommentsList}
                                 className={`btn btn-link text-dark ${!showComments ? 'ti-angle-down' : 'ti-angle-up'}`}
                                 title="Show answers"
                         />
@@ -46,8 +68,31 @@ const Question = (props) => {
             </div>
             {
                 showComments ? (
-                    <div className="question-comments">
-                        {getComments()}
+                    <div>
+                        {
+                            newComment ? (
+                                <div className={"questions-comment-form"}>
+                                    <div className={"form-group m-0 w-100"}>
+                                        <label className={"font-weight-bold"}>Comment</label>
+                                        <textarea rows="1"
+                                                  placeholder={"Enter text"}
+                                                  value={comment}
+                                                  onChange={(e) => setComment(e.target.value)}
+                                                  className={"form-control"}
+                                        />
+                                    </div>
+                                    <button className={"btn btn-primary ml-1"}
+                                            onClick={saveComment}
+                                    >
+                                        Save
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="question-comments">
+                                    {getComments()}
+                                </div>
+                            )
+                        }
                     </div>
                 ) : null
             }

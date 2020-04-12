@@ -10,11 +10,13 @@ const Comment = (props) => {
             <hr/>
             <div className="comment-footer">
                 <div>
-                    <span className={"written"}>Written by:</span> <span className={"mr-2"}>Username</span>
+                    <span className={"written"}>Written by:</span> <span className={"mr-2"}>
+                    {props.student.firstName + " " + props.student.lastName}
+                </span>
                 </div>
                 <div>
-                    <a className="ti-thumb-up pr-3"/>
-                    <a className="ti-thumb-down"/>
+                    {/*<a className="ti-thumb-up pr-3"/>*/}
+                    {/*<a className="ti-thumb-down"/>*/}
                 </div>
             </div>
         </div>

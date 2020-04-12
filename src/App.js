@@ -89,9 +89,13 @@ class App extends Component {
                     <Route path={"/todo"}>
                         <div className={"wrapper d-flex align-items-stretch"} id="content">
                             <Sidebar subjects={this.props.classes}/>
-                            <ToDo todos={this.props.toDos} onDelete={this.props.onDeleteToDo}
-                                  onSubmit={this.props.onUpdateToDo} onSearch={this.props.onSearchToDo}
-                                  searchedToDos={this.props.searched_toDos}/>
+                            <ToDo todos={this.props.toDos}
+                                  onDelete={this.props.onDeleteToDo}
+                                  onSubmit={this.props.onUpdateToDo}
+                                  onSearch={this.props.onSearchToDo}
+                                  onCreateToDo={this.props.onCreateToDo}
+                                  searchedToDos={this.props.searched_toDos}
+                            />
                         </div>
                     </Route>
                     <Route path={"/reviews"}>
