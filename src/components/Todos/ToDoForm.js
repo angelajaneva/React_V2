@@ -46,7 +46,6 @@ const Form = (props) => {
         props.onDelete(todoId);
     };
 
-
     return (
         <div className="todo">
             <div className="todo-wrapper">

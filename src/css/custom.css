@@ -94,6 +94,14 @@ body,
     margin: 0;
     width: 100%;
 }
+.todos .todos-form {
+    margin-bottom: 15px;
+    display: flex;
+    width: 100%;
+    align-items: flex-end;
+    background-color: #ececec;
+    padding: 15px;
+}
 
 /* classes */
 .content .content-navigation {

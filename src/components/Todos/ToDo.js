@@ -5,11 +5,11 @@ import 'rc-checkbox/assets/index.css';
 import Page from "../Views/Page";
 
 const Todo = (props) => {
-
     const [completed, setCompleted] = useState(false);
     const [uncompleted, setUncompleted] = useState(false);
     const [searched, setSearched] = useState(false);
-
+    const [newTodo, setNewTodo] = useState(false);
+    const [todo, setTodo] = useState("");
 
     const completedHandler = () => {
         setCompleted(true);
@@ -60,9 +60,18 @@ const Todo = (props) => {
         })
     };
 
+    const saveTodo = (e) => {
+        e.preventDefault();
+        props.onCreateToDo(
+            {
+                todo
+            }
+        );
+        setTodo("");
+        setNewTodo(false);
+    };
 
     const getTodoCompleted = () => {
-
         const newRef = props.todos.filter(todo => todo.completed === true);
 
         return newRef.map(todo => {
@@ -73,8 +82,8 @@ const Todo = (props) => {
             )
         })
     };
-    const getTodoUncompleted = () => {
 
+    const getTodoUncompleted = () => {
         const newRef = props.todos.filter(todo => todo.completed === false);
 
         return newRef.map(todo => {
@@ -86,9 +95,8 @@ const Todo = (props) => {
         })
     };
 
-
     const addNewTodo = () => {
-        // save new todo here;
+        setNewTodo(!newTodo);
     };
 
     return (
@@ -97,7 +105,6 @@ const Todo = (props) => {
                 <div className={"todos-options-left"}>
                     <button className="btn btn-primary"
                             onClick={addNewTodo}>
-
                         <i className={"fa fa-plus"} aria-hidden="false"/> New Todo
                     </button>
                 </div>
@@ -107,16 +114,40 @@ const Todo = (props) => {
                     <Link to="#" onClick={completedHandler}>Completed</Link>
                     <div className={"todos-options-search"}>
                         <form className="form-inline mt-2 mt-md-0" onSubmit={onSearch}>
-                            <input className="form-control" placeholder={"Search"}
+                            <input className="form-control"
+                                   placeholder={"Search"}
                                    name={"searchTerm"}/>
-                            <button className="btn card ti-search my-2 my-sm-0" type="submit"
+                            <button className="btn card ti-search my-2 my-sm-0"
+                                    type="submit"
                                     onClick={searchHandler}>
                             </button>
-
                         </form>
                     </div>
                 </div>
             </div>
+            {
+                newTodo ? (
+                    <div className="todos-form">
+                        <div className={"form-group m-0"}>
+                            <label className={"font-weight-bold"}>Todo</label>
+                            <input type={"text"}
+                                   placeholder={"Enter text"}
+                                   value={todo}
+                                   onChange={(e) => setTodo(e.target.value)}
+                                   className={"form-control"}
+                            />
+                        </div>
+                        <div className={"form-groupm-0"}>
+                            <label className={"font-weight-bold"}>&nbsp;</label>
+                            <button className={"btn btn-primary"}
+                                    onClick={saveTodo}
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                ) : null
+            }
             {completed && getTodoCompleted()}
             {uncompleted && getTodoUncompleted()}
             {searched && getSearchedTodos()}

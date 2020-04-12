@@ -20,7 +20,7 @@ const service = {
     },
 
     getToDo: () => {
-        return axios.get("/todos")
+        return axios.get("http://all.local/_Projects/Freelancing/angrus/api/index.php")
     },
 
     addNote: (note) => {
