@@ -11,7 +11,7 @@ const Question = (props) => {
 
     useEffect(() => {
 
-        axios.get(`/${props.id}/comments`).then((data) => {
+        axios.get(`http://all.local/_Projects/Freelancing/angrus/api/comments.php`).then((data) => {
             setComments(data.data)
         })
     }, [props.id]);
@@ -41,11 +41,15 @@ const Question = (props) => {
 
     const saveComment = (e) => {
         e.preventDefault();
+<<<<<<< HEAD
         const content = {
             "content": comment
         };
         axiosRepository.addComment(props.id, content);
         setComment("");
+=======
+        // add save comment here
+>>>>>>> dff2580ad57296b5a0ace8cd8344d5f04e87e75a
     };
 
     return (
@@ -87,10 +91,14 @@ const Question = (props) => {
                                         />
                                     </div>
                                     <button className={"btn btn-primary ml-1"}
+<<<<<<< HEAD
                                             type="submit"
                                             onClick={saveComment}
                                             // onSubmit={showCommentsList}
 
+=======
+                                            onClick={saveComment}
+>>>>>>> dff2580ad57296b5a0ace8cd8344d5f04e87e75a
                                     >
                                         Save
                                     </button>

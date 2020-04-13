@@ -283,7 +283,10 @@ body,
     background-color: #ececec;
     padding: 15px;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> dff2580ad57296b5a0ace8cd8344d5f04e87e75a
 
 /* reviews */
 .reviews .review {
@@ -334,12 +337,18 @@ body,
 .reviews .reviews-options {
     margin: 15px 0;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> dff2580ad57296b5a0ace8cd8344d5f04e87e75a
 .reviews .reviews-form {
     width: 98%;
     margin: auto;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> dff2580ad57296b5a0ace8cd8344d5f04e87e75a
 
 /* component not found */
 .not-found {

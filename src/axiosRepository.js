@@ -116,6 +116,7 @@ const service = {
 
     searchTodo: (searchTerm) => {
         return axios.get(`/todo/search?term=${searchTerm}`);
+<<<<<<< HEAD
     },
 
     getReviewsPaged: (page, pageSize) => {
@@ -137,6 +138,8 @@ const service = {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
+=======
+>>>>>>> dff2580ad57296b5a0ace8cd8344d5f04e87e75a
     },
 
     searchReviews: (searchTerm) => {
