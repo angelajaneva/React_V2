@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Comment from "./Comment"
 import axios from "../../../custom-axios"
+import axiosRepository from "../../../axiosRepository"
 
 const Question = (props) => {
     const [comments, setComments] = useState([]);
@@ -40,7 +41,11 @@ const Question = (props) => {
 
     const saveComment = (e) => {
         e.preventDefault();
-        // add save comment here
+        const content = {
+            "content": comment
+        };
+        axiosRepository.addComment(props.id, content);
+        setComment("");
     };
 
     return (
@@ -82,7 +87,10 @@ const Question = (props) => {
                                         />
                                     </div>
                                     <button className={"btn btn-primary ml-1"}
+                                            type="submit"
                                             onClick={saveComment}
+                                            // onSubmit={showCommentsList}
+
                                     >
                                         Save
                                     </button>

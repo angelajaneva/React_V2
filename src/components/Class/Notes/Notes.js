@@ -52,7 +52,7 @@ const Notes = (props) => {
 
         setIsEdit(false);
         setIsNew(false);
-        props.loadNotes();
+        // props.loadNotes();
     };
 
     const getNotes = () => {

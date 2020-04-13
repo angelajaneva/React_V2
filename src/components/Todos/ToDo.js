@@ -60,16 +60,6 @@ const Todo = (props) => {
         })
     };
 
-    const saveTodo = (e) => {
-        e.preventDefault();
-        props.onCreateToDo(
-            {
-                todo
-            }
-        );
-        setTodo("");
-        setNewTodo(false);
-    };
 
     const getTodoCompleted = () => {
         const newRef = props.todos.filter(todo => todo.completed === true);
@@ -97,6 +87,16 @@ const Todo = (props) => {
 
     const addNewTodo = () => {
         setNewTodo(!newTodo);
+    };
+
+    const saveTodo = (e) => {
+        e.preventDefault();
+
+        props.onCreateToDo({
+            "text": todo
+        });
+        setTodo("");
+        setNewTodo(false);
     };
 
     return (
@@ -129,7 +129,7 @@ const Todo = (props) => {
                 newTodo ? (
                     <div className="todos-form">
                         <div className={"form-group m-0 w-100"}>
-                            <label className={"font-weight-bold"}>Todo</label>
+                            <label className="font-weight-bold">Write a ToDo</label>
                             <textarea rows="1"
                                       placeholder={"Enter text"}
                                       value={todo}

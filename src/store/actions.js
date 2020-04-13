@@ -21,3 +21,6 @@ export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAIL = 'AUTH_FAIL';
 
 export const SET_REVIEWS = 'SET_REVIEWS';
+
+export const SET_COMMENTS = 'SET_COMMENTS';
+export const ADD_COMMENT = 'ADD_COMMENT';

@@ -1,13 +1,19 @@
 import * as actionTYPE from '../actions'
 
 const initialState = {
-    reviews: []
+    reviews: [],
+    pageSize: 3,
+    page: 0,
+    totalPages: 0
 };
+
 const reducer = (state = initialState, action) => {
     if (action.type === actionTYPE.SET_REVIEWS) {
         return {
-            ...state,
-            reviews: action.reviews
+            reviews: action.reviews,
+            page: action.page,
+            pageSize: action.pageSize,
+            totalPages: action.totalPages
         }
     }
     return state;

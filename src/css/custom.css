@@ -331,6 +331,15 @@ body,
     border-top: 1px solid #e0e0e0;
     padding-top: 15px;
 }
+.reviews .reviews-options {
+    margin: 15px 0;
+}
+
+.reviews .reviews-form {
+    width: 98%;
+    margin: auto;
+}
+
 
 /* component not found */
 .not-found {
