@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9ff925be-4b53-45f1-b652-031920c76324" name="Default Changelist" comment="Merge branch 'master' of https://github.com/angelajaneva/v2&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/axiosRepository.js&#10;#&#9;src/components/Reviews/Reviews.js&#10;#&#9;src/components/Todos/ToDo.js&#10;#&#9;src/css/custom.css">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/axiosRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/axiosRepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Class/Notes/Notes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Class/Notes/Notes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Class/Questions/Comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Class/Questions/Comment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Class/Questions/Question.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Class/Questions/Question.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Reviews/Reviews.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Reviews/Reviews.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Todos/ToDo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Todos/ToDo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/reviews.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/reviews.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/reviews-reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/reviews-reducer.js" afterDir="false" />
-    </list>
+    <list default="true" id="9ff925be-4b53-45f1-b652-031920c76324" name="Default Changelist" comment="Merge branch 'master' of https://github.com/angelajaneva/v2&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/axiosRepository.js&#10;#&#9;src/components/Reviews/Reviews.js&#10;#&#9;src/components/Todos/ToDo.js&#10;#&#9;src/css/custom.css" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +43,7 @@
         <entry file="file://$PROJECT_DIR$/src/components/Reviews/Reviews.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="219">
-              <caret line="119" column="55" selection-start-line="119" selection-start-column="55" selection-end-line="119" selection-end-column="55" />
+              <caret line="119" column="50" selection-start-line="119" selection-start-column="50" selection-end-line="119" selection-end-column="50" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -290,7 +276,7 @@
       <workItem from="1586649700308" duration="1330000" />
       <workItem from="1586651137213" duration="1525000" />
       <workItem from="1586684469429" duration="13414000" />
-      <workItem from="1586768618885" duration="8735000" />
+      <workItem from="1586768618885" duration="9508000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/angelajaneva/v2&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
       <created>1586651214749</created>
@@ -310,7 +296,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34255000" />
+    <option name="totallyTimeSpent" value="35028000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -724,7 +710,7 @@
     <entry file="file://$PROJECT_DIR$/src/components/Reviews/Reviews.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
-          <caret line="119" column="55" selection-start-line="119" selection-start-column="55" selection-end-line="119" selection-end-column="55" />
+          <caret line="119" column="50" selection-start-line="119" selection-start-column="50" selection-end-line="119" selection-end-column="50" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
