@@ -14,7 +14,7 @@ const Questions = (props) => {
         if(getClass){
             setName(getClass.name);
         }
-    });
+    }, [props.classes, props.id, setName]);
 
     const getQuestions = () =>{
         const newRef = props.questions.filter(question => {
@@ -38,6 +38,9 @@ const Questions = (props) => {
     return (
         <Page title={name} styles={"content"}>
             <Navigation classId={classId} />
+            {/*<h6 className="text-right"><i>*/}
+            {/*    Make sure what you're asking is unique, concise and phrased like a question.</i>*/}
+            {/*</h6><br/>*/}
             {getQuestions()}
         </Page>
     )

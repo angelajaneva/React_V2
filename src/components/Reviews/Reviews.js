@@ -21,11 +21,18 @@ class Reviews extends Component {
         this.props.getReviews();
     }
 
-    handleChange = event => {
+    handleChangeText = event => {
         this.setState({
-            ...this.state, [event.target.name]: event.target.value
+            reviewText: event.target.value
         });
     };
+
+    handleChangeClass = event => {
+        this.setState({
+            reviewClass: event.target.value
+        });
+    };
+
 
     changeRating = (newRating, name) => {
         this.setState({
@@ -37,11 +44,19 @@ class Reviews extends Component {
         e.preventDefault();
 
         let review = {
-            description: this.state.reviewText,
-            rating: this.state.rating
+            text: this.state.reviewText,
+            rated: this.state.rating,
+            className: this.state.reviewClass
         };
 
-        // todo save
+        console.log(review.text + review.rated + review.className)
+
+        this.props.onCreateReview(review);
+        this.setState({
+            reviewClass: "",
+            reviewText: "",
+            rating: 0,
+        })
     };
 
 
@@ -68,7 +83,7 @@ class Reviews extends Component {
                                forcePage={this.props.totalPages}
                                onPageChange={this.handlePageClick}
                                containerClassName={"pagination justify-content-center"}
-                               activeClassName={"active"}/>
+                               activeClassName="active"/>
             )
         }
     };
@@ -80,8 +95,7 @@ class Reviews extends Component {
                     <div className={"row row d-flex align-items-center justify-content-end"}>
                         <div className={"col-12 col-md-3 d-flex align-items-center"}>
                             <input type={"test"} placeholder={"Search"} className="form-control"/>
-                            <button className={"btn btn-primary"}>
-                                <i className={"fa fa-search"} aria-hidden="false"/>
+                            <button className={"btn card ti-search my-2 my-sm-0"}>
                             </button>
                         </div>
                     </div>
@@ -93,7 +107,7 @@ class Reviews extends Component {
                                 <div className="review-holder">
                                     <div className="review-holder-header">
                                         <div className="review-holder-header-left">
-                                            <img src={require('../user.png')}/>
+                                            <img src={require('../user.png')} alt=""/>
                                             <h6>{item.student.firstName} {item.student.lastName} about
                                                 <span className="font-weight-bolder"> {item.aclass.name}</span>
                                             </h6>
@@ -117,36 +131,38 @@ class Reviews extends Component {
                     )
                 }
                 {this.paginate()}
-                <div className={"reviews-form mb-4"}>
-                    <h4 className={"font-weight-bold"}>Write Review.</h4>
-                    <label className={"font-weight-bold mt-2"}>Rating</label><br/>
-                    <StarRatings rating={this.state.rating}
-                                 starRatedColor="rgba(255, 193, 7, 1)"
-                                 changeRating={this.changeRating}
-                                 numberOfStars={5}
-                                 name='rating'
-                                 starDimension={"30px"}
-                    /><br/>
-                    <label className={"font-weight-bold mt-4"}>Name of the class</label>
-                    <textarea rows={1}
-                              className={"form-control"}
-                              placeholder={"Enter class name"}
-                              value={this.state.reviewClass}
-                              onChange={this.handleChange}
-                    />
+                <div className="container card">
+                    <div className={"reviews-form mb-4"}>
+                        <h4 className={"font-weight-bold"}>Write Review:</h4>
+                        <label className={"font-weight-bold mt-2"}>Rating</label><br/>
+                        <StarRatings rating={this.state.rating}
+                                     starRatedColor="rgba(255, 193, 7, 1)"
+                                     changeRating={this.changeRating}
+                                     numberOfStars={5}
+                                     name='rating'
+                                     starDimension={"30px"}
+                        /><br/>
+                        <label className={"font-weight-bold mt-4"}>Name of the class</label>
+                        <textarea rows={1}
+                                  className={"form-control"}
+                                  placeholder={"Enter class name"}
+                                  value={this.state.reviewClass}
+                                  onChange={this.handleChangeClass}
+                        />
 
-                    <label className={"font-weight-bold mt-4"}>Description</label>
-                    <textarea rows={5}
-                              className={"form-control"}
-                              placeholder={"Enter your review"}
-                              value={this.state.reviewText}
-                              onChange={this.handleChange}
-                    />
-                    <button className={"btn btn-primary mt-2"}
-                            onClick={this.saveReview}
-                    >
-                        Save
-                    </button>
+                        <label className={"font-weight-bold mt-4"}>Description</label>
+                        <textarea rows={5}
+                                  className={"form-control"}
+                                  placeholder={"Enter your review"}
+                                  value={this.state.reviewText}
+                                  onChange={this.handleChangeText}
+                        />
+                        <button className={"btn btn-primary mt-2"}
+                                onClick={this.saveReview}
+                        >
+                            Save
+                        </button>
+                    </div>
                 </div>
             </Page>
         );
@@ -166,6 +182,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getReviews: (page = 0) => dispatch(reviewsActionCreator.loadReviews(page)),
+        onCreateReview: (review) => dispatch(reviewsActionCreator.createReview(review))
     };
 };
 

@@ -62,8 +62,26 @@ body,
     background-color: #FFF;
     box-shadow: 0 0 6px #00000026;
     margin-bottom: 20px;
-    border-left: 5px solid #000;
+    border-left: 5px solid #85CDF4;
+
 }
+
+.todos .todo:nth-child(2n) {
+    background-color: #FFF;
+    box-shadow: 0 0 6px #00000026;
+    margin-bottom: 20px;
+    border-left: 5px solid #ffc107;
+
+}
+.todos .todo:nth-child(3n) {
+    background-color: #FFF;
+    box-shadow: 0 0 6px #00000026;
+    margin-bottom: 20px;
+    border-left: 5px solid #5F497E;
+
+}
+
+/**/
 .todos .todo-wrapper {
     padding: 15px;
 }
@@ -158,9 +176,23 @@ body,
 }
 .content .notes-list .notes-list-holder .note-side-holder {
     padding: 15px;
-    border-left: 5px solid #000;
+    border-left: 6px solid #85CDF4;
     border-bottom: 1px solid #e0e0e0;
 }
+
+.content .notes-list .notes-list-holder .note-side-holder:nth-child(2n) {
+    padding: 15px;
+    border-left: 6px solid #ffc107;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.content .notes-list .notes-list-holder .note-side-holder:nth-child(3n) {
+    padding: 15px;
+    border-left: 6px solid #5F497E;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+
 .content .notes-list .notes-list-holder .note-side-holder:hover {
     background-color: #f6f6f6;
     cursor: pointer;
@@ -338,6 +370,8 @@ body,
 .reviews .reviews-form {
     width: 98%;
     margin: auto;
+    background-color: #FFF;
+    padding: 30px;
 }
 
 

@@ -3,12 +3,19 @@ import service from "../../axiosRepository";
 
 export const setReviews = (reviews, page, pageSize, totalPages) => {
     return {
-        type: actionTYPES.SET_REVIEWS,
+        type: actionTYPES.SET_REVIEWS_PAGED,
         reviews: reviews,
         page: page,
         pageSize: pageSize,
         totalPages: totalPages
 
+    }
+};
+
+export const addReview = (review) => {
+    return {
+        type: actionTYPES.ADD_REVIEWS,
+        newReview: review
     }
 };
 
@@ -18,7 +25,15 @@ export const loadReviews = (page) => {
         service.getReviewsPaged(page, 3).then(response => {
             dispatch(setReviews(response.data.content, page,
                 response.data.pageable.pageSize,
-                response.data.totalPages));
+                response.data.totalPages))
+        })
+    }
+};
+
+export const createReview = (review) => {
+    return (dispatch) => {
+        service.addReview(review).then(response => {
+            dispatch(addReview(response.data))
         })
     }
 };
