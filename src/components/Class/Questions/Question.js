@@ -44,8 +44,12 @@ const Question = (props) => {
         const content = {
             "content": comment
         };
-        axiosRepository.addComment(props.id, content);
+        axiosRepository.addComment(props.id, content).then((data) => {
+            setComments(comments.concat(data.data));
+        });
         setComment("");
+        setNewComment(false);
+        setShowComments(true);
     };
 
     return (
@@ -53,7 +57,7 @@ const Question = (props) => {
             <div className="question-holder">
                 <div className="question-holder-header">
                     <div className="question-holder-header-left">
-                        <img src={require('../../user.png')} />
+                        <img src={require('../../user.png')}/>
                         <h5>{props.firstName} {props.lastName}</h5>
                     </div>
                     <div className="question-holder-header-right">
@@ -89,7 +93,7 @@ const Question = (props) => {
                                     <button className={"btn btn-primary ml-1"}
                                             type="submit"
                                             onClick={saveComment}
-                                            // onSubmit={showCommentsList}
+                                        // onSubmit={showCommentsList}
 
                                     >
                                         Save

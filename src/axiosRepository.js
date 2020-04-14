@@ -40,9 +40,6 @@ const service = {
             ...note
         };
 
-        {
-            console.log(note.noteId)
-        }
         const formParams = qs.stringify(data);
         return axios.patch("/note/edit", formParams, {
             headers: {
