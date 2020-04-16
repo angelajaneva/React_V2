@@ -74,9 +74,9 @@ class App extends Component {
                             <Questions questions={this.props.questions}
                                        classes={this.props.classes}
                                        id={props.match.params.classId}
-                                       comments={this.clickForComments}
                                        show={this.state.showComments}
                                        onDelete={this.props.onDeleteQuestion}
+                                       onCreate={this.props.onCreateQuestion}
                             />
                         </div>
                     }/>

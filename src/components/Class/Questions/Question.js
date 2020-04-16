@@ -10,7 +10,6 @@ const Question = (props) => {
     const [comment, setComment] = useState("");
 
     useEffect(() => {
-
         axios.get(`/${props.id}/comments`).then((data) => {
             setComments(data.data)
         })
