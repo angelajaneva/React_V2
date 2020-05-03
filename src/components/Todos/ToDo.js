@@ -99,6 +99,8 @@ const Todo = (props) => {
         setNewTodo(false);
     };
 
+    const isEnabled = () => todo.length > 0;
+
     return (
         <Page title={"Todos"}>
             <div className={"todos-options"}>
@@ -139,6 +141,7 @@ const Todo = (props) => {
                         </div>
                         <button className={"btn btn-primary ml-1"}
                                 onClick={saveTodo}
+                                disabled={!isEnabled()}
                         >
                             Save
                         </button>

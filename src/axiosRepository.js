@@ -12,7 +12,7 @@ const service = {
     },
 
     getClasses: () => {
-        return axios.get("/classes/S17001")
+        return axios.get("/class/student/S17001")
     },
 
     getToDo: () => {

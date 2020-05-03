@@ -19,16 +19,32 @@ export const addReview = (review) => {
     }
 };
 
+export const setTotal = (total) => {
+    {console.log(total + "total")}
+    return pages = total;
+};
+
 //async
 export const loadReviews = (page) => {
     return (dispatch) => {
         service.getReviewsPaged(page, 3).then(response => {
-            dispatch(setReviews(response.data.content, page,
-                response.data.pageable.pageSize,
-                response.data.totalPages))
+            totalPages();
+            console.log(pages);
+            dispatch(setReviews(response.data, page,
+                3,
+                4));
         })
     }
 };
+
+export let pages;
+
+export const totalPages = () => {
+     service.getReviews().then(response => {
+         return setTotal(response.data.length)
+    })
+};
+
 
 export const createReview = (review) => {
     return (dispatch) => {

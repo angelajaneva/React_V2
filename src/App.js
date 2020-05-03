@@ -16,6 +16,7 @@ import Questions from "./components/Class/Questions/Questions";
 import ToDo from "./components/Todos/ToDo"
 import QuestionAdd from "./components/QuestionAdd";
 import Reviews from "./components/Reviews/Reviews";
+import {Events} from "react-scroll/modules";
 
 class App extends Component {
     constructor(props) {
@@ -33,7 +34,9 @@ class App extends Component {
         this.props.loadingQuestions();
         this.props.loadClasses();
         this.props.loadToDos();
+
     }
+
 
 //sekade kaj so se koriste this.state.notes sea da se zamene so this.props.nts
 //sekade kaj so ima this.createNote --> this.props.onCreateNote isto za site metodi
@@ -80,12 +83,7 @@ class App extends Component {
                             />
                         </div>
                     }/>
-                    <Route path={"/question/new"} exact>
-                        <div className={"wrapper d-flex align-items-stretch"} id="content">
-                            <Sidebar subjects={this.props.classes}/>
-                            <QuestionAdd onNewTermAdded={this.props.onCreateQuestion}/>
-                        </div>
-                    </Route>
+
                     <Route path={"/todo"}>
                         <div className={"wrapper d-flex align-items-stretch"} id="content">
                             <Sidebar subjects={this.props.classes}/>
@@ -99,9 +97,9 @@ class App extends Component {
                         </div>
                     </Route>
                     <Route path={"/reviews"}>
-                        <div className={"wrapper d-flex align-items-stretch"} id="content">
+                        <div className={"wrapper d-flex align-items-stretch"} style={{height: '165%'}} id="content">
                             <Sidebar subjects={this.props.classes}/>
-                            <Reviews />
+                            <Reviews/>
                         </div>
                     </Route>
 

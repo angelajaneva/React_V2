@@ -32,7 +32,7 @@ const Sidebar = (props) => {
                     <li>
                         <Collapsible trigger={<Link to={"/home"} className={"d-flex align-items-center justify-content-between"}>
                             <span>
-                                <i className="fa fa-list mr-3 my-3"></i> My Classes
+                                <i className="fa fa-list mr-3 my-3"/> My Classes
                             </span>
                             <span className="far fa-pull-right ti-angle-down"/>
                         </Link>
@@ -46,10 +46,10 @@ const Sidebar = (props) => {
                         <Link to={"/todo"}><span className="ti-pencil-alt mr-3"/>Todos</Link>
                     </li>
                     <li>
-                        <Link to={"/reviews"}><i className="fa fa-comments mr-3"/> Reviews</Link>
+                        <Link to={"/reviews"}><i className="ti-book mr-3"/> Reviews</Link>
                     </li>
                     <li>
-                        <Link to="#"><i className="fa fa-sign-out-alt mr-3"/> Sign Out</Link>
+                        <Link to="#"><i className="fa fa sign-out-alt mr-3"/> Sign Out</Link>
                     </li>
                 </ul>
             </nav>

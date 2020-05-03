@@ -12,7 +12,7 @@ const Question = (props) => {
     useEffect(() => {
         axios.get(`/${props.id}/comments`).then((data) => {
             setComments(data.data)
-        })
+        });
     }, [props.id]);
 
     const getComments = () => {
@@ -50,6 +50,9 @@ const Question = (props) => {
         setNewComment(false);
         setShowComments(true);
     };
+
+    const isEnabled = () => comment.length > 0;
+
 
     return (
         <div className={"question"}>
@@ -92,8 +95,7 @@ const Question = (props) => {
                                     <button className={"btn btn-primary ml-1"}
                                             type="submit"
                                             onClick={saveComment}
-                                        // onSubmit={showCommentsList}
-
+                                            disabled={!isEnabled()}
                                     >
                                         Save
                                     </button>

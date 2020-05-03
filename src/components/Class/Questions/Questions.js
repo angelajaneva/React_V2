@@ -3,27 +3,34 @@ import Question from "./Question";
 import {useParams} from "react-router-dom";
 import Page from "../../Views/Page";
 import Navigation from "../Navigation";
+import SearchInput, {createFilter} from 'react-search-input'
+import ValidForm from "react-valid-form-component";
+
+const KEYS_TO_FILTERS = ['text', 'student.firstName', 'student.lastName'];
 
 const Questions = (props) => {
     const {classId} = useParams();
     const [name, setName] = useState();
     const [addQuestionForm, setAddQuestionForm] = useState(false);
     const [questionText, setQuestionText] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         let getClass = props.classes.filter(item => item.id === props.id)[0];
 
-        if(getClass){
+        if (getClass) {
             setName(getClass.name);
         }
     }, [props.classes, props.id, setName]);
 
-    const getQuestions = () =>{
+    const getQuestions = () => {
         const newRef = props.questions.filter(question => {
             return question.aclass.id === classId;
         });
 
-        return newRef.map(question => {
+        const filteredQuestions = newRef.filter(createFilter(searchTerm, KEYS_TO_FILTERS));
+
+        return filteredQuestions.map(question => {
             return (
                 <Question key={question.id}
                           text={question.text}
@@ -36,6 +43,11 @@ const Questions = (props) => {
             )
         })
     };
+
+    const searchUpdated = (term) => {
+        setSearchTerm(term)
+    };
+
 
     const openAddQuestionForm = () => {
         setAddQuestionForm(!addQuestionForm);
@@ -55,32 +67,38 @@ const Questions = (props) => {
 
     return (
         <Page title={name} styles={"content"}>
-            <Navigation classId={classId} formOpen={openAddQuestionForm} />
+            <Navigation classId={classId} formOpen={openAddQuestionForm}/>
             {
                 addQuestionForm ? (
-                    <div className={"question-form"}>
-                        <div className={"form-group m-0 w-100"}>
-                            <label className="font-weight-bold">Write a Question</label>
-                            <textarea rows="3"
-                                      placeholder={"Make sure what you're asking is unique, concise and phrased like a question."}
-                                      value={questionText}
-                                      onChange={(e) => setQuestionText(e.target.value)}
-                                      className={"form-control"}
-                            />
+                    <ValidForm nosubmit
+                               onSubmit={saveQuestion}>
+                        <div className={"question-form"}>
+                            <div className={"form-group m-0 w-100"}>
+                                <label className="font-weight-bold">Write a Question</label>
+                                <textarea rows="3"
+                                          name="add-question"
+                                          id="add-question"
+                                          placeholder={"Make sure what you're asking is unique, concise and phrased like a question."}
+                                          value={questionText}
+                                          onChange={(e) => setQuestionText(e.target.value)}
+                                          className={"form-control"}
+                                          required
+                                          minLength="50"
+                                />
+                            </div>
+                            <button className={"btn btn-primary ml-1"}
+                                    type="submit"
+                                    // onClick={saveQuestion}
+                            >
+                                Save
+                            </button>
                         </div>
-                        <button className={"btn btn-primary ml-1"}
-                                onClick={saveQuestion}
-                        >
-                            Save
-                        </button>
-                    </div>
+                    </ValidForm>
+
                 ) : null
             }
+            <SearchInput className="form-control pb-5 search-input" onChange={searchUpdated}/>
             {getQuestions()}
-            {/*<h6 className="text-right"><i>*/}
-            {/*    </i>*/}
-            {/*</h6><br/>*/}
-
         </Page>
     )
 };

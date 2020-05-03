@@ -4,6 +4,8 @@ import Page from "../Views/Page";
 import * as reviewsActionCreator from "../../store/actions/reviews";
 import StarRatings from 'react-star-ratings';
 import ReactPaginate from 'react-paginate';
+import {Events, animateScroll as scroll} from 'react-scroll'
+import ValidForm from 'react-valid-form-component'
 
 
 class Reviews extends Component {
@@ -13,13 +15,25 @@ class Reviews extends Component {
         this.state = {
             reviewClass: "",
             reviewText: "",
-            rating: 0,
+            rating: 0
         };
     }
 
     componentDidMount() {
         this.props.getReviews();
+
+        Events.scrollEvent.register('begin', function(to, element) {
+        });
+
+        Events.scrollEvent.register('end', function(to, element) {
+        });
     }
+
+    componentWillUnmount() {
+        Events.scrollEvent.remove('begin');
+        Events.scrollEvent.remove('end');
+    }
+
 
     handleChangeText = event => {
         this.setState({
@@ -49,7 +63,6 @@ class Reviews extends Component {
             className: this.state.reviewClass
         };
 
-        console.log(review.text + review.rated + review.className)
 
         this.props.onCreateReview(review);
         this.setState({
@@ -59,6 +72,10 @@ class Reviews extends Component {
         })
     };
 
+    isEnabled = () => {
+        return this.state.rating > 0 && this.state.reviewClass.length > 0 &&
+            this.state.reviewText.length > 0;
+    };
 
     handlePageClick = (e) => {
         this.props.getReviews(e.selected)
@@ -90,81 +107,97 @@ class Reviews extends Component {
 
     render() {
         return (
-            <Page title={"Reviews"}>
-                <div className="reviews-options">
-                    <div className={"row row d-flex align-items-center justify-content-end"}>
-                        <div className={"col-12 col-md-3 d-flex align-items-center"}>
-                            <input type={"test"} placeholder={"Search"} className="form-control"/>
-                            <button className={"btn card ti-search my-2 my-sm-0"}>
-                            </button>
+            <div className="wrapper align-items-stretch" id="content-area">
+                <Page title={"Reviews"}>
+                    <div className="reviews-options">
+                        <div className={"row row d-flex align-items-center justify-content-end"}>
+                            <div className={"col-12 col-md-3 d-flex align-items-center"}>
+                                <button className={"btn card ti-write my-2 my-sm-0"}
+                                        title={"Write a review"} onClick={() => scroll.scrollToBottom()}/>
+                                <input type={"test"} placeholder={"Search for a class"} className="form-control"/>
+                                <button className={"btn card ti-search my-2 my-sm-0"} title={"Search"}/>
+                            </div>
                         </div>
                     </div>
-                </div>
-                {
-                    this.props.reviews.length ? this.props.reviews.map(item => {
-                        return (
-                            <div className={"review"} key={item.id}>
-                                <div className="review-holder">
-                                    <div className="review-holder-header">
-                                        <div className="review-holder-header-left">
-                                            <img src={require('../user.png')} alt=""/>
-                                            <h6>{item.student.firstName} {item.student.lastName} about
-                                                <span className="font-weight-bolder"> {item.aclass.name}</span>
-                                            </h6>
+                    {
+                        this.props.reviews.length ? this.props.reviews.map(item => {
+                            return (
+                                <div className={"review"} key={item.id}>
+                                    <div className="review-holder">
+                                        <div className="review-holder-header">
+                                            <div className="review-holder-header-left">
+                                                <img src={require('../user.png')} alt=""/>
+                                                <h6>{item.student.firstName} {item.student.lastName} about
+                                                    <span className="font-weight-bolder"> {item.aclass.name}</span>
+                                                </h6>
+                                            </div>
+                                            <div className="review-holder-header-right">
+                                                <button className="btn btn-link text-warning">
+                                                    <i className={"fa fa-star mr-1"} aria-hidden="false"/>
+                                                    <span className={"rate"}>{item.rated}/5</span>
+                                                    <br/><span><small>{item.createdOn}</small></span>
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div className="review-holder-header-right">
-                                            <button className="btn btn-link text-warning">
-                                                <i className={"fa fa-star mr-1"} aria-hidden="false"/>
-                                                <span className={"rate"}>{item.rated}/5</span>
-                                                <br/><span><small>{item.createdOn}</small></span>
-                                            </button>
+                                        <div className="review-holder-body">
+                                            {item.text}
                                         </div>
-                                    </div>
-                                    <div className="review-holder-body">
-                                        {item.text}
                                     </div>
                                 </div>
-                            </div>
-                        );
-                    }) : (
-                        <h3 className={"not-found"}>No reviews found</h3>
-                    )
-                }
-                {this.paginate()}
-                <div className="container card">
-                    <div className={"reviews-form mb-4"}>
-                        <h4 className={"font-weight-bold"}>Write Review:</h4>
-                        <label className={"font-weight-bold mt-2"}>Rating</label><br/>
-                        <StarRatings rating={this.state.rating}
-                                     starRatedColor="rgba(255, 193, 7, 1)"
-                                     changeRating={this.changeRating}
-                                     numberOfStars={5}
-                                     name='rating'
-                                     starDimension={"30px"}
-                        /><br/>
-                        <label className={"font-weight-bold mt-4"}>Name of the class</label>
-                        <textarea rows={1}
-                                  className={"form-control"}
-                                  placeholder={"Enter class name"}
-                                  value={this.state.reviewClass}
-                                  onChange={this.handleChangeClass}
-                        />
+                            );
+                        }) : (
+                            <h3 className={"not-found"}>No reviews found</h3>
+                        )
+                    }
+                    {this.paginate()}
+                    <div className="container card">
+                        <ValidForm className={"reviews-form mb-4"}
+                                   nosubmit
+                                   onSubmit={this.saveReview}>
+                            <h4 className={"font-weight-bold"}>Write Review:</h4>
+                            <label className={"font-weight-bold mt-2"}>Rating</label><br/>
+                            <StarRatings rating={this.state.rating}
+                                         starRatedColor="rgba(255, 193, 7, 1)"
+                                         changeRating={this.changeRating}
+                                         numberOfStars={5}
+                                         name='rating'
+                                         starDimension={"30px"}
+                            /><br/>
+                            <label className={"font-weight-bold mt-4"}>Name of the class</label>
+                            <textarea rows={1}
+                                      className={"form-control"}
+                                      name="className"
+                                      id="className"
+                                      placeholder={"Enter class name"}
+                                      value={this.state.reviewClass}
+                                      onChange={this.handleChangeClass}
+                                      required
+                                      minLength="2"
+                                      // maxLength="100"
+                            />
 
-                        <label className={"font-weight-bold mt-4"}>Description</label>
-                        <textarea rows={5}
-                                  className={"form-control"}
-                                  placeholder={"Enter your review"}
-                                  value={this.state.reviewText}
-                                  onChange={this.handleChangeText}
-                        />
-                        <button className={"btn btn-primary mt-2"}
-                                onClick={this.saveReview}
-                        >
-                            Save
-                        </button>
+                            <label className={"font-weight-bold mt-4"}>Description</label>
+                            <textarea rows={5}
+                                      className={"form-control"}
+                                      name="description"
+                                      id="description"
+                                      placeholder={"Enter your review"}
+                                      value={this.state.reviewText}
+                                      onChange={this.handleChangeText}
+                                      required
+                                      minLength="20"
+                            />
+                            <button className={"btn btn-primary mt-2"}
+                                    type="submit"
+                                    onClick={this.saveReview}
+                                    disabled={!this.isEnabled()}
+                            >
+                                Save
+                            </button>
+                        </ValidForm>
                     </div>
-                </div>
-            </Page>
+                </Page>
+            </div>
         );
     }
 }

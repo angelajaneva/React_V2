@@ -3,6 +3,10 @@ import Note from "./Note";
 import Navigation from "../Navigation";
 import Page from "../../Views/Page";
 import {useParams} from "react-router-dom";
+import SearchInput, {createFilter} from 'react-search-input'
+import AddForm from "./AddForm";
+
+const KEYS_TO_FILTERS = ['title', 'description'];
 
 const Notes = (props) => {
     const {classId} = useParams();
@@ -12,6 +16,8 @@ const Notes = (props) => {
     const [id, setId] = useState("");
     const [isEdit, setIsEdit] = useState(false);
     const [isNew, setIsNew] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+
 
     useEffect(() => {
         let getClass = props.classes.filter(item => item.id === props.id)[0];
@@ -19,7 +25,7 @@ const Notes = (props) => {
         if (getClass) {
             setName(getClass.name);
         }
-    });
+    }, [props.classes, props.id]);
 
     const openNote = (note = null, isEdit = false, isNew = false) => {
         setIsEdit(isEdit);
@@ -34,7 +40,12 @@ const Notes = (props) => {
         }
     };
 
+    const searchUpdated = (term) => {
+        setSearchTerm(term)
+    };
+
     const saveNote = () => {
+
         let note = {
             "noteId": id,
             "classId": classId,
@@ -59,7 +70,11 @@ const Notes = (props) => {
         const newRef = props.cards.filter(note => {
             return note.aclass.id === classId;
         });
-        return newRef.map(note => {
+
+        const filteredNotes = newRef.filter(createFilter(searchTerm, KEYS_TO_FILTERS));
+
+
+        return filteredNotes.map(note => {
             return (
                 <Note key={note.id}
                       note={note}
@@ -77,9 +92,10 @@ const Notes = (props) => {
             <Navigation classId={classId}/>
             <div className="notes-list">
                 <div className={"notes-list-holder"}>
-                    <input className="form-control search-control" placeholder={"Search"}/>
+                    <SearchInput className="search-control form-control search-input" onChange={searchUpdated}/>
                     {getNotes()}
                 </div>
+
                 <div className={"notes-list-read"}>
                     <div className={"notes-list-read-options"}>
                         <button className={"btn btn-primary"} onClick={() => openNote(null, true, true)}>
@@ -89,39 +105,50 @@ const Notes = (props) => {
                     <div className={"notes-list-read-body"}>
                         {
                             isEdit ? (
-                                <div>
-                                    <div className={"form-group"}>
-                                        <label className="font-weight-bold">Title</label>
-                                        <input type={"text"}
-                                               className={"form-control"}
-                                               placeholder={"Enter title"}
-                                               value={title}
-                                               onChange={(e) => setTitle(e.target.value)}
-                                        />
+                                isNew ? (
+                                    <div>
+                                    <AddForm saveNote={saveNote}
+                                                 title={title}
+                                                 setTitle={setTitle}
+                                                 description={description}
+                                                 setDescription={setDescription}
+                                                 openNote={openNote}/>
                                     </div>
-                                    <div className={"form-group"}>
-                                        <label className="font-weight-bold">Description</label>
-                                        <textarea rows={"5"}
-                                                  className={"form-control"}
-                                                  placeholder={"Enter title"}
-                                                  value={description}
-                                                  onChange={(e) => setDescription(e.target.value)}
-                                        />
+                                    ):(
+                                    <div>
+                                        <div className={"form-group"}>
+                                            <label className="font-weight-bold">Title</label>
+                                            <input type={"text"}
+                                                   className={"form-control"}
+                                                   placeholder={"Enter title"}
+                                                   value={title}
+                                                   onChange={(e) => setTitle(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className={"form-group"}>
+                                            <label className="font-weight-bold">Description</label>
+                                            <textarea rows={"5"}
+                                                      className={"form-control"}
+                                                      placeholder={"Enter title"}
+                                                      value={description}
+                                                      onChange={(e) => setDescription(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className={"form-group text-right"}>
+                                            <button className={"btn btn-primary mr-1"}
+                                                    onClick={() => openNote(null, false, false)}
+                                            >
+                                                Close
+                                            </button>
+                                            <button className={"btn btn-primary"}
+                                                    onClick={saveNote}
+                                            >
+                                                Save
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div className={"form-group text-right"}>
-                                        <button className={"btn btn-primary mr-1"}
-                                                onClick={() => openNote(null, false, false)}
-                                        >
-                                            Close
-                                        </button>
-                                        <button className={"btn btn-primary"}
-                                                onClick={saveNote}
-                                        >
-                                            Save
-                                        </button>
-                                    </div>
-                                </div>
-                            ) : (
+
+                            ) ) : (
                                 <div>
                                     {
                                         title && description ? (
