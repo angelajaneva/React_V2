@@ -1,4 +1,5 @@
 import React from 'react'
+import Highlighter from "react-highlight-words";
 
 const Note = (props) => {
     const deleteHandler = (e) => {
@@ -21,7 +22,12 @@ const Note = (props) => {
 
     return (
         <div className="note-side-holder" onClick={openHandler}>
-            <h5>{props.note.title}</h5>
+            <h5>
+                <Highlighter searchWords={[props.searchTerm]}
+                             textToHighlight={props.note.title}
+                             highlightStyle={{backgroundColor: '#E7FF6A'}}
+                />
+            </h5>
             <div>
                 <button title="Edit"
                         onClick={editHandler}

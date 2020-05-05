@@ -430,7 +430,6 @@ body,
     position: relative;
 }
 
-
 .search-input > input:focus {
  outline: none;
 }

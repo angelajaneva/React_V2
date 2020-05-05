@@ -39,6 +39,7 @@ const Questions = (props) => {
                           id={question.id}
                           comments={props.comments}
                           show={props.show}
+                          searchTerm={searchTerm}
                 />
             )
         })

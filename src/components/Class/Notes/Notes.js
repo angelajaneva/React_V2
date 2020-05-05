@@ -4,7 +4,9 @@ import Navigation from "../Navigation";
 import Page from "../../Views/Page";
 import {useParams} from "react-router-dom";
 import SearchInput, {createFilter} from 'react-search-input'
+import Highlighter from "react-highlight-words";
 import AddForm from "./AddForm";
+
 
 const KEYS_TO_FILTERS = ['title', 'description'];
 
@@ -81,6 +83,7 @@ const Notes = (props) => {
                       onDelete={props.onDelete}
                       classId={classId}
                       openNote={openNote}
+                      searchTerm={searchTerm}
                 />
             )
         })
@@ -92,7 +95,8 @@ const Notes = (props) => {
             <Navigation classId={classId}/>
             <div className="notes-list">
                 <div className={"notes-list-holder"}>
-                    <SearchInput className="search-control form-control search-input" onChange={searchUpdated}/>
+                    <SearchInput className="search-control form-control search-input"
+                                 onChange={searchUpdated}/>
                     {getNotes()}
                 </div>
 
@@ -107,14 +111,14 @@ const Notes = (props) => {
                             isEdit ? (
                                 isNew ? (
                                     <div>
-                                    <AddForm saveNote={saveNote}
+                                        <AddForm saveNote={saveNote}
                                                  title={title}
                                                  setTitle={setTitle}
                                                  description={description}
                                                  setDescription={setDescription}
                                                  openNote={openNote}/>
                                     </div>
-                                    ):(
+                                ) : (
                                     <div>
                                         <div className={"form-group"}>
                                             <label className="font-weight-bold">Title</label>
@@ -148,13 +152,25 @@ const Notes = (props) => {
                                         </div>
                                     </div>
 
-                            ) ) : (
+                                )) : (
                                 <div>
                                     {
                                         title && description ? (
                                             <div>
-                                                <h3>{title}</h3>
-                                                <div>{description}</div>
+                                                <h3>{<Highlighter searchWords={[searchTerm]}
+                                                                  textToHighlight={title}
+                                                                  highlightStyle={{backgroundColor: '#E7FF6A'}}
+
+                                                />
+                                                }
+                                                </h3>
+                                                <div>{<Highlighter searchWords={[searchTerm]}
+                                                                   textToHighlight={description}
+                                                                   highlightStyle={{backgroundColor: '#E7FF6A'}}
+
+                                                />
+                                                }
+                                                </div>
                                             </div>
                                         ) : (
                                             <h4>Please select note.</h4>

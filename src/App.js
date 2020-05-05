@@ -16,7 +16,7 @@ import Questions from "./components/Class/Questions/Questions";
 import ToDo from "./components/Todos/ToDo"
 import QuestionAdd from "./components/QuestionAdd";
 import Reviews from "./components/Reviews/Reviews";
-import {Events} from "react-scroll/modules";
+
 
 class App extends Component {
     constructor(props) {

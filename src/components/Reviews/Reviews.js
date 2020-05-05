@@ -6,16 +6,17 @@ import StarRatings from 'react-star-ratings';
 import ReactPaginate from 'react-paginate';
 import {Events, animateScroll as scroll} from 'react-scroll'
 import ValidForm from 'react-valid-form-component'
-
+import * as queryString from 'query-string'
 
 class Reviews extends Component {
+
     constructor(props) {
         super(props);
 
         this.state = {
             reviewClass: "",
             reviewText: "",
-            rating: 0
+            rating: 0,
         };
     }
 
@@ -27,12 +28,24 @@ class Reviews extends Component {
 
         Events.scrollEvent.register('end', function(to, element) {
         });
+
+        console.log(window.location.search + " aaa");
+        const values = queryString.parse(window.location.search);
+        console.log(values.term)
+        // fetchData(values.term)
     }
 
     componentWillUnmount() {
         Events.scrollEvent.remove('begin');
         Events.scrollEvent.remove('end');
     }
+
+     getParams = (location) =>{
+        const searchParams = new URLSearchParams(location.search);
+        return {
+            query: searchParams.get('term') || '',
+        };
+    };
 
 
     handleChangeText = event => {
@@ -80,6 +93,7 @@ class Reviews extends Component {
     handlePageClick = (e) => {
         this.props.getReviews(e.selected)
     };
+
 
     paginate = () => {
         if (this.props.page !== null) {

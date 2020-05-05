@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Comment from "./Comment"
 import axios from "../../../custom-axios"
 import axiosRepository from "../../../axiosRepository"
+import Highlighter from "react-highlight-words";
 
 const Question = (props) => {
     const [comments, setComments] = useState([]);
@@ -60,7 +61,13 @@ const Question = (props) => {
                 <div className="question-holder-header">
                     <div className="question-holder-header-left">
                         <img src={require('../../user.png')}/>
-                        <h5>{props.firstName} {props.lastName}</h5>
+                        <h5><Highlighter searchWords={[props.searchTerm]}
+                                         textToHighlight={props.firstName + " "}
+                                         highlightStyle={{backgroundColor: '#E7FF6A'}}/>
+                            <Highlighter searchWords={[props.searchTerm]}
+                                         textToHighlight={props.lastName}
+                                         highlightStyle={{backgroundColor: '#E7FF6A'}}/>
+                        </h5>
                     </div>
                     <div className="question-holder-header-right">
                         <button className="btn btn-link text-dark ti-comment mr-1"
@@ -74,7 +81,13 @@ const Question = (props) => {
                     </div>
                 </div>
                 <div className="question-holder-body">
-                    <h6 className="text-left mt-4 ">{props.text}</h6>
+                    <h6 className="text-left mt-4 ">
+                        <Highlighter searchWords={[props.searchTerm]}
+                                     textToHighlight={props.text}
+                                     highlightStyle={{backgroundColor: '#E7FF6A'}}
+
+                        />
+                    </h6>
                 </div>
             </div>
             {
