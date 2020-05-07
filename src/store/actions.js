@@ -15,15 +15,10 @@ export const DELETE_TODO = 'DELETE_TODO';
 export const CREATE_TODO = 'CREATE_TODO';
 export const SEARCH_TODOs = 'SEARCH_TODOs';
 
-
-export const AUTH_START = 'AUTH_START';
-export const AUTH_SUCCESS = 'AUTH_SUCCESS';
-export const AUTH_FAIL = 'AUTH_FAIL';
-
 export const SET_REVIEWS_PAGED = 'SET_REVIEWS_PAGED';
 export const ADD_REVIEWS = 'ADD_REVIEWS';
 export const SEARCH_REVIEWS = 'SEARCH_REVIEWS';
 
+export const CURRENT_USER = 'CURRENT_USER';
 
-export const SET_COMMENTS = 'SET_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';

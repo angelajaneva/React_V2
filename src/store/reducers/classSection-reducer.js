@@ -3,7 +3,8 @@ import * as actionTYPE from '../actions'
 const initialState = {
     notes: [],
     classes: [],
-    questions: []
+    questions: [],
+    user: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -26,14 +27,14 @@ const reducer = (state = initialState, action) => {
         };
     }
 
-    if (action.type === actionTYPE.ADD_NOTE){
+    if (action.type === actionTYPE.ADD_NOTE) {
         return {
             ...state,
             notes: state.notes.concat(action.newNote)
         };
     }
 
-    if (action.type === actionTYPE.DELETE_NOTE){
+    if (action.type === actionTYPE.DELETE_NOTE) {
         const newRef = state.notes.filter((note) => note.id !== action.noteId);
         return {
             ...state,
@@ -41,7 +42,7 @@ const reducer = (state = initialState, action) => {
         };
     }
 
-    if (action.type === actionTYPE.UPDATE_NOTE){
+    if (action.type === actionTYPE.UPDATE_NOTE) {
         const editRef = state.notes.map((note) => {
             if (note.id === action.editedNote.id)
                 return action.editedNote;
@@ -54,14 +55,14 @@ const reducer = (state = initialState, action) => {
     }
 
     //QUESTIONS
-    if (action.type === actionTYPE.SET_QUESTIONS ){
+    if (action.type === actionTYPE.SET_QUESTIONS) {
         return {
             ...state,
             questions: action.questions
         };
     }
 
-    if (action.type === actionTYPE.ADD_QUESTION){
+    if (action.type === actionTYPE.ADD_QUESTION) {
         return {
             ...state,
             questions: state.questions.concat(action.newQuestion)
@@ -74,6 +75,14 @@ const reducer = (state = initialState, action) => {
             ...state,
             questions: newRef
         };
+    }
+
+    if (action.type === actionTYPE.CURRENT_USER) {
+        return {
+            ...state,
+            user: action.user
+        };
+
     }
 
     return state;

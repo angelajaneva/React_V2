@@ -1,8 +1,21 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Link} from "react-router-dom";
 import Collapsible from 'react-collapsible'
+import axios from "../custom-axios";
 
+const USERNAME = 'username';
 const Sidebar = (props) => {
+
+    const [user, setUser] = useState([]);
+
+    useEffect(() => {
+        // {console.log(localStorage.getItem(USERNAME))}
+        // axios.get("/users/" + localStorage.getItem(USERNAME)).then((data) => {
+        //     setUser(data.data)
+        // });
+    }, []);
+
+
     const getClasses = () => {
         return props.subjects.map(subject => {
             return (
@@ -22,7 +35,7 @@ const Sidebar = (props) => {
                     {/*style="background-image: url(images/bg_1.jpg);"*/}
                     <div className="user-logo">
                         <div className="img" style={{backgroundImage: 'url(' + require('./user.png') + ')'}}/>
-                        <h3>Name Surname</h3>
+                        {/*<h3>{user.student.firstName} {user.student.lastName}</h3>*/}
                     </div>
                 </div>
                 <ul className="list-unstyled components mb-5">
@@ -49,7 +62,7 @@ const Sidebar = (props) => {
                         <Link to={"/reviews"}><i className="ti-book mr-3"/> Reviews</Link>
                     </li>
                     <li>
-                        <Link to="#"><i className="fa fa sign-out-alt mr-3"/> Sign Out</Link>
+                        <Link to={"/"} onClick={() => props.onLogout}><i className="fa fa sign-out-alt mr-3"/> Sign Out</Link>
                     </li>
                 </ul>
             </nav>

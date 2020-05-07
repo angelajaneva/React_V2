@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-import './signinStyle.css';
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import {login} from "../UserApi";
 import auth from "../../../Authentication/auth";
 import {notification} from "antd";
 
 const ACCESS_TOKEN = 'accessToken';
+const USERNAME = 'username';
 
 class SignIn extends Component {
     constructor(props) {
@@ -42,7 +42,7 @@ class SignIn extends Component {
             });
             auth.setToken(response.data, true, ACCESS_TOKEN);
             localStorage.setItem(ACCESS_TOKEN, response.data);
-            {console.log("tuka")}
+            localStorage.setItem(USERNAME, (this.state.username));
             this.props.history.push("/home");
         }).catch(error => {
             console.log("Sorry! Something went wrong. Please try again");

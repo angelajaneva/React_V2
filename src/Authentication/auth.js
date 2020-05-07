@@ -1,7 +1,5 @@
 import { isEmpty } from 'lodash';
 import * as jwt_decode from 'jwt-decode';
-// import {ACCESS_TOKEN} from "../constraints";
-
 const ACCESS_TOKEN = 'accessToken';
 const TOKEN_KEY = ACCESS_TOKEN;
 const USER_INFO = 'userInfo';
@@ -55,12 +53,12 @@ const auth = {
     get(key) {
         console.log("key: " + key);
         if (localStorage && localStorage.getItem(key)) {
-            console.log("tukaa" + localStorage.getItem(key))
+            console.log(localStorage.getItem(key));
             return JSON.parse(localStorage.getItem(key)) || null;
         }
 
         if (sessionStorage && sessionStorage.getItem(key)) {
-            console.log("tukaa" + sessionStorage.getItem(key))
+            console.log(sessionStorage.getItem(key));
             return JSON.parse(sessionStorage.getItem(key)) || null;
         }
 
@@ -102,6 +100,7 @@ const auth = {
     },
 
     setUserInfo(value = '', isLocalStorage = false, userInfo = USER_INFO) {
+
         return auth.set(value, userInfo, isLocalStorage);
     },
     getDecodedAccessToken(token) {

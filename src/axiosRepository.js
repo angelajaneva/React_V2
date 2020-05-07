@@ -139,6 +139,10 @@ const service = {
     searchReviews: (searchTerm) => {
       return axios.get(`/todo/search?term=${searchTerm}`)
     },
+
+    getUser: (username) => {
+        return axios.get("/users/" + username)
+    }
 };
 
 export default service;

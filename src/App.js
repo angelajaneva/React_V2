@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
 import {connect} from "react-redux";
-import {notification} from 'antd';
-import {withRouter} from 'react-router-dom';
 
 import * as noteActionCreator from './store/actions/note'
 import * as questionActionCreator from './store/actions/questions'
 import * as classesActionCreator from './store/actions/classes'
 import * as toDoActionCreator from './store/actions/todos'
+import * as userActionCreator from './store/actions/user'
 
 import './App.css';
 import './components/Header'
@@ -19,21 +18,16 @@ import Questions from "./components/Class/Questions/Questions";
 import ToDo from "./components/Todos/ToDo";
 import Reviews from "./components/Reviews/Reviews"
 import SignIn from "./components/UserAuthentication/Signin/Signin";
+import auth from "./Authentication/auth";
+import PrivateRoute from "./Authentication/PrivateRoute"
 
 const ACCESS_TOKEN = 'accessToken';
+const USERNAME = 'username';
+
 
 class App extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            editingTodo: false,
-            notEditing: true,
-            showComments: false,
-            currentUser: null,
-            isAuthenticated: false
-
-        }
     }
 
     componentDidMount() {
@@ -41,24 +35,16 @@ class App extends Component {
         this.props.loadingQuestions();
         this.props.loadClasses();
         this.props.loadToDos();
+        this.props.currentUser();
 
     }
 
-    handleLogout(redirectTo = "/", notificationType = "success", description = "You're successfully logged out.") {
+    handleLogout =() => {
+        auth.clearToken(ACCESS_TOKEN);
         localStorage.removeItem(ACCESS_TOKEN);
+        localStorage.removeItem(USERNAME);
 
-        this.setState({
-            currentUser: null,
-            isAuthenticated: false
-        });
-
-        this.props.history.push(redirectTo);
-
-        notification[notificationType]({
-            message: 'Polling App',
-            description: description,
-        });
-    }
+    };
 
 
 //sekade kaj so se koriste this.state.notes sea da se zamene so this.props.nts
@@ -74,23 +60,27 @@ class App extends Component {
                         </div>}>
                     </Route>
                     <Route path="/signin" render={(props) => <SignIn {...props}
-                                                                     isAuthenticated={this.state.isAuthenticated}
-                                                                     currentUser={this.state.currentUser}
                                                                      onLogout={this.handleLogout}
                     />}/>
 
 
-                    <Route path={"/home"}>
+                    <PrivateRoute path={"/home"}>
                         <div className={"wrapper d-flex align-items-stretch"} id="content">
-                            <Sidebar subjects={this.props.classes}/>
+                            <Sidebar subjects={this.props.classes}
+                                     user={this.props.user}
+                                     onLogout={this.handleLogout}/>
                         </div>
-                    </Route>
-                    <Route path={"/classes/:classId"} exact render={(props) =>
+                    </PrivateRoute>
+
+                    <PrivateRoute path={"/classes/:classId"} exact render={(props) =>
                         <Redirect to={"/" + props.match.params.classId + "/notes"}/>
                     }/>
-                    <Route path={"/:classId/notes"} exact render={(props) =>
+
+                    <PrivateRoute path={"/:classId/notes"} exact render={(props) =>
                         <div className={"wrapper d-flex align-items-stretch"}>
-                            <Sidebar subjects={this.props.classes}/>
+                            <Sidebar subjects={this.props.classes}
+                                     user={this.props.user}
+                                     onLogout={this.handleLogout}/>
                             <Notes cards={this.props.notes}
                                    classes={this.props.classes}
                                    id={props.match.params.classId}
@@ -101,22 +91,26 @@ class App extends Component {
                             />
                         </div>
                     }/>
-                    <Route path={"/:classId/questions"} exact render={(props) =>
+
+                    <PrivateRoute path={"/:classId/questions"} exact render={(props) =>
                         <div className={"wrapper d-flex align-items-stretch"}>
-                            <Sidebar subjects={this.props.classes}/>
+                            <Sidebar subjects={this.props.classes}
+                                     user={this.props.user}
+                                     onLogout={this.handleLogout}/>
                             <Questions questions={this.props.questions}
                                        classes={this.props.classes}
                                        id={props.match.params.classId}
-                                       show={this.state.showComments}
                                        onDelete={this.props.onDeleteQuestion}
                                        onCreate={this.props.onCreateQuestion}
                             />
                         </div>
                     }/>
 
-                    <Route path={"/todo"}>
+                    <PrivateRoute path={"/todo"}>
                         <div className={"wrapper d-flex align-items-stretch"} id="content">
-                            <Sidebar subjects={this.props.classes}/>
+                            <Sidebar subjects={this.props.classes}
+                                     user={this.props.user}
+                                     onLogout={this.handleLogout}/>
                             <ToDo todos={this.props.toDos}
                                   onDelete={this.props.onDeleteToDo}
                                   onSubmit={this.props.onUpdateToDo}
@@ -125,13 +119,16 @@ class App extends Component {
                                   searchedToDos={this.props.searched_toDos}
                             />
                         </div>
-                    </Route>
-                    <Route path={"/reviews"}>
+                    </PrivateRoute>
+
+                    <PrivateRoute path={"/reviews"}>
                         <div className={"wrapper d-flex align-items-stretch"} style={{height: '165%'}} id="content">
-                            <Sidebar subjects={this.props.classes}/>
+                            <Sidebar subjects={this.props.classes}
+                                     user={this.props.user}
+                                     onLogout={this.handleLogout()}/>
                             <Reviews/>
                         </div>
-                    </Route>
+                    </PrivateRoute>
 
                 </Router>
             </div>
@@ -146,7 +143,8 @@ const mapStateToProps = (state) => {
         questions: state.classReducer.questions,
         classes: state.classReducer.classes,
         toDos: state.toDoReducer.toDos,
-        searched_toDos: state.toDoReducer.searched_toDos
+        searched_toDos: state.toDoReducer.searched_toDos,
+        user: state.classReducer.user
     }
 };
 //receives the dispatch function as arg
@@ -155,7 +153,7 @@ const mapDispatchToProps = (dispatch) => {
         onCreateNote: (note) => dispatch(noteActionCreator.addNotes(note)),
         onDeleteNote: (id) => dispatch(noteActionCreator.deleteNotes(id)),
         onUpdateNote: (note) => dispatch(noteActionCreator.updateNotes(note)),
-        loadingNotes: () => dispatch(noteActionCreator.loadNotes()),
+        loadingNotes: (student) => dispatch(noteActionCreator.loadNotes(student)),
         onCreateQuestion: (question) => dispatch(questionActionCreator.addQuestions(question)),
         onDeleteQuestion: (id) => dispatch(questionActionCreator.deleteQuestions(id)),
         loadingQuestions: () => dispatch(questionActionCreator.loadQuestions()),
@@ -164,7 +162,8 @@ const mapDispatchToProps = (dispatch) => {
         loadToDos: () => dispatch(toDoActionCreator.loadToDos()),
         onDeleteToDo: (id) => dispatch(toDoActionCreator.deleteToDos(id)),
         onCreateToDo: (toDo) => dispatch(toDoActionCreator.createToDos(toDo)),
-        onSearchToDo: (term) => dispatch(toDoActionCreator.searchToDos(term))
+        onSearchToDo: (term) => dispatch(toDoActionCreator.searchToDos(term)),
+        currentUser: () => dispatch(userActionCreator.getUser(localStorage.getItem(USERNAME)))
     };
 };
 
