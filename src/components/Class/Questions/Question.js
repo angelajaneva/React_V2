@@ -97,7 +97,7 @@ const Question = (props) => {
                             newComment ? (
                                 <div className={"questions-comment-form"}>
                                     <div className={"form-group m-0 w-100"}>
-                                        <label className={"font-weight-bold"}>Comment</label>
+                                        <label className={"font-weight-bold"}>Type here to comment</label>
                                         <textarea rows="1"
                                                   placeholder={"Enter text"}
                                                   value={comment}

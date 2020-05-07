@@ -128,7 +128,7 @@ class Reviews extends Component {
                             <div className={"col-12 col-md-3 d-flex align-items-center"}>
                                 <button className={"btn card ti-write my-2 my-sm-0"}
                                         title={"Write a review"} onClick={() => scroll.scrollToBottom()}/>
-                                <input type={"test"} placeholder={"Search for a class"} className="form-control"/>
+                                <input type={"test"} placeholder={"Search"} className="form-control"/>
                                 <button className={"btn card ti-search my-2 my-sm-0"} title={"Search"}/>
                             </div>
                         </div>

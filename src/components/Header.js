@@ -24,7 +24,7 @@ const Header = (props) => {
                             <Link to="#" className="nav-link">Contact</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="#" className="nav-link">Sign in</Link>
+                            <Link to="/signin" className="nav-link">Sign in</Link>
                         </li>
 
                     </ul>

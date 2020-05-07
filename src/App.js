@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
 import {connect} from "react-redux";
+import {notification} from 'antd';
+import {withRouter} from 'react-router-dom';
+
 import * as noteActionCreator from './store/actions/note'
 import * as questionActionCreator from './store/actions/questions'
 import * as classesActionCreator from './store/actions/classes'
@@ -13,10 +16,11 @@ import Home from './components/Home'
 import Sidebar from "./components/Sidebar";
 import Notes from "./components/Class/Notes/Notes";
 import Questions from "./components/Class/Questions/Questions";
-import ToDo from "./components/Todos/ToDo"
-import QuestionAdd from "./components/QuestionAdd";
-import Reviews from "./components/Reviews/Reviews";
+import ToDo from "./components/Todos/ToDo";
+import Reviews from "./components/Reviews/Reviews"
+import SignIn from "./components/UserAuthentication/Signin/Signin";
 
+const ACCESS_TOKEN = 'accessToken';
 
 class App extends Component {
     constructor(props) {
@@ -25,7 +29,10 @@ class App extends Component {
         this.state = {
             editingTodo: false,
             notEditing: true,
-            showComments: false
+            showComments: false,
+            currentUser: null,
+            isAuthenticated: false
+
         }
     }
 
@@ -35,6 +42,22 @@ class App extends Component {
         this.props.loadClasses();
         this.props.loadToDos();
 
+    }
+
+    handleLogout(redirectTo = "/", notificationType = "success", description = "You're successfully logged out.") {
+        localStorage.removeItem(ACCESS_TOKEN);
+
+        this.setState({
+            currentUser: null,
+            isAuthenticated: false
+        });
+
+        this.props.history.push(redirectTo);
+
+        notification[notificationType]({
+            message: 'Polling App',
+            description: description,
+        });
     }
 
 
@@ -50,6 +73,13 @@ class App extends Component {
                             <Home/>
                         </div>}>
                     </Route>
+                    <Route path="/signin" render={(props) => <SignIn {...props}
+                                                                     isAuthenticated={this.state.isAuthenticated}
+                                                                     currentUser={this.state.currentUser}
+                                                                     onLogout={this.handleLogout}
+                    />}/>
+
+
                     <Route path={"/home"}>
                         <div className={"wrapper d-flex align-items-stretch"} id="content">
                             <Sidebar subjects={this.props.classes}/>
@@ -132,9 +162,9 @@ const mapDispatchToProps = (dispatch) => {
         loadClasses: () => dispatch(classesActionCreator.loadClassesForStudent()),
         onUpdateToDo: (toDo) => dispatch(toDoActionCreator.updateToDos(toDo)),
         loadToDos: () => dispatch(toDoActionCreator.loadToDos()),
-        onDeleteToDo: (id) => dispatch (toDoActionCreator.deleteToDos(id)),
-        onCreateToDo: (toDo) => dispatch (toDoActionCreator.createToDos(toDo)),
-        onSearchToDo: (term) => dispatch (toDoActionCreator.searchToDos(term))
+        onDeleteToDo: (id) => dispatch(toDoActionCreator.deleteToDos(id)),
+        onCreateToDo: (toDo) => dispatch(toDoActionCreator.createToDos(toDo)),
+        onSearchToDo: (term) => dispatch(toDoActionCreator.searchToDos(term))
     };
 };
 
