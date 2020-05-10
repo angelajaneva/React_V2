@@ -6,7 +6,6 @@ import * as noteActionCreator from './store/actions/note'
 import * as questionActionCreator from './store/actions/questions'
 import * as classesActionCreator from './store/actions/classes'
 import * as toDoActionCreator from './store/actions/todos'
-import * as userActionCreator from './store/actions/user'
 
 import './App.css';
 import './components/Header'
@@ -19,37 +18,24 @@ import ToDo from "./components/Todos/ToDo";
 import Reviews from "./components/Reviews/Reviews"
 import SignIn from "./components/UserAuthentication/Signin/Signin";
 import auth from "./Authentication/auth";
-import PrivateRoute from "./Authentication/PrivateRoute"
+import About from "./components/About/About";
 
-const ACCESS_TOKEN = 'accessToken';
-const USERNAME = 'username';
 
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-    }
+
 
     componentDidMount() {
         this.props.loadingNotes();
         this.props.loadingQuestions();
         this.props.loadClasses();
         this.props.loadToDos();
-        this.props.currentUser();
-
     }
-
-    handleLogout =() => {
-        auth.clearToken(ACCESS_TOKEN);
-        localStorage.removeItem(ACCESS_TOKEN);
-        localStorage.removeItem(USERNAME);
-
-    };
-
 
 //sekade kaj so se koriste this.state.notes sea da se zamene so this.props.nts
 //sekade kaj so ima this.createNote --> this.props.onCreateNote isto za site metodi
     render() {
+
         return (
             <div className={"app-wrapper"}>
                 <Router>
@@ -59,76 +45,103 @@ class App extends Component {
                             <Home/>
                         </div>}>
                     </Route>
+
+                    <Route path={"/about"} exact>
+                        <div>
+                            <Header/>
+                            <About/>
+                        </div>
+                    </Route>
+
                     <Route path="/signin" render={(props) => <SignIn {...props}
-                                                                     onLogout={this.handleLogout}
                     />}/>
 
+                    <Route path={"/home"} exact render={() =>
 
-                    <PrivateRoute path={"/home"}>
-                        <div className={"wrapper d-flex align-items-stretch"} id="content">
-                            <Sidebar subjects={this.props.classes}
-                                     user={this.props.user}
-                                     onLogout={this.handleLogout}/>
-                        </div>
-                    </PrivateRoute>
-
-                    <PrivateRoute path={"/classes/:classId"} exact render={(props) =>
-                        <Redirect to={"/" + props.match.params.classId + "/notes"}/>
+                        auth.getToken() !== null ? (
+                            <div className={"wrapper d-flex align-items-stretch"} id="content">
+                                <Sidebar subjects={this.props.classes}/>
+                            </div>
+                        ) : (
+                            <Redirect to="/signin"/>)
                     }/>
 
-                    <PrivateRoute path={"/:classId/notes"} exact render={(props) =>
-                        <div className={"wrapper d-flex align-items-stretch"}>
-                            <Sidebar subjects={this.props.classes}
-                                     user={this.props.user}
-                                     onLogout={this.handleLogout}/>
-                            <Notes cards={this.props.notes}
-                                   classes={this.props.classes}
-                                   id={props.match.params.classId}
-                                   onDelete={this.props.onDeleteNote}
-                                   onNewTermAdded={this.props.onCreateNote}
-                                   loadNotes={this.props.loadingNotes}
-                                   updateNote={this.props.onUpdateNote}
-                            />
-                        </div>
+                    <Route path={"/classes/:classId"} exact render={(props) =>
+                        auth.getToken() !== null ? (
+                            <Redirect to={"/" + props.match.params.classId + "/notes"}/>
+                        ) : (
+                            <Redirect to="/signin"/>
+                        )
                     }/>
 
-                    <PrivateRoute path={"/:classId/questions"} exact render={(props) =>
-                        <div className={"wrapper d-flex align-items-stretch"}>
-                            <Sidebar subjects={this.props.classes}
-                                     user={this.props.user}
-                                     onLogout={this.handleLogout}/>
-                            <Questions questions={this.props.questions}
+                    <Route path={"/:classId/notes"} exact render={(props) =>
+
+                        auth.getToken() !== null ? (
+                            <div className={"wrapper d-flex align-items-stretch"}>
+                                <Sidebar subjects={this.props.classes}
+                                />
+                                <Notes cards={this.props.notes}
                                        classes={this.props.classes}
                                        id={props.match.params.classId}
-                                       onDelete={this.props.onDeleteQuestion}
-                                       onCreate={this.props.onCreateQuestion}
-                            />
-                        </div>
+                                       onDelete={this.props.onDeleteNote}
+                                       onNewTermAdded={this.props.onCreateNote}
+                                       loadNotes={this.props.loadingNotes}
+                                       updateNote={this.props.onUpdateNote}
+                                />
+                            </div>
+                        ) : (
+                            <Redirect to="/signin"/>
+                        )
                     }/>
 
-                    <PrivateRoute path={"/todo"}>
-                        <div className={"wrapper d-flex align-items-stretch"} id="content">
-                            <Sidebar subjects={this.props.classes}
-                                     user={this.props.user}
-                                     onLogout={this.handleLogout}/>
-                            <ToDo todos={this.props.toDos}
-                                  onDelete={this.props.onDeleteToDo}
-                                  onSubmit={this.props.onUpdateToDo}
-                                  onSearch={this.props.onSearchToDo}
-                                  onCreateToDo={this.props.onCreateToDo}
-                                  searchedToDos={this.props.searched_toDos}
-                            />
-                        </div>
-                    </PrivateRoute>
+                    <Route path={"/:classId/questions"} exact render={(props) =>
 
-                    <PrivateRoute path={"/reviews"}>
-                        <div className={"wrapper d-flex align-items-stretch"} style={{height: '165%'}} id="content">
-                            <Sidebar subjects={this.props.classes}
-                                     user={this.props.user}
-                                     onLogout={this.handleLogout()}/>
-                            <Reviews/>
-                        </div>
-                    </PrivateRoute>
+                        auth.getToken() !== null ? (
+                            <div className={"wrapper d-flex align-items-stretch"}>
+                                <Sidebar subjects={this.props.classes}
+                                />
+                                <Questions questions={this.props.questions}
+                                           classes={this.props.classes}
+                                           id={props.match.params.classId}
+                                           onDelete={this.props.onDeleteQuestion}
+                                           onCreate={this.props.onCreateQuestion}
+                                />
+                            </div>
+                        ) : (
+                            <Redirect to="/signin"/>
+                        )
+                    }/>
+
+                    <Route path={"/todo"} render={() =>
+
+                        auth.getToken() !== null ? (
+                            <div className={"wrapper d-flex align-items-stretch"} id="content">
+                                <Sidebar subjects={this.props.classes}
+                                />
+                                <ToDo todos={this.props.toDos}
+                                      onDelete={this.props.onDeleteToDo}
+                                      onSubmit={this.props.onUpdateToDo}
+                                      onSearch={this.props.onSearchToDo}
+                                      onCreateToDo={this.props.onCreateToDo}
+                                      searchedToDos={this.props.searched_toDos}
+                                />
+                            </div>
+                        ) : (
+                            <Redirect to="/signin"/>)
+                    }/>
+
+                    <Route path={"/reviews"} render={() =>
+
+                        auth.getToken() !== null ? (
+                            <div className={"wrapper d-flex align-items-stretch"} style={{height: '165%'}}
+                                 id="content">
+                                <Sidebar subjects={this.props.classes}
+                                />
+                                <Reviews/>
+                            </div>
+                        ) : (
+                            < Redirect to="/signin"/>)
+                    }/>
 
                 </Router>
             </div>
@@ -144,7 +157,6 @@ const mapStateToProps = (state) => {
         classes: state.classReducer.classes,
         toDos: state.toDoReducer.toDos,
         searched_toDos: state.toDoReducer.searched_toDos,
-        user: state.classReducer.user
     }
 };
 //receives the dispatch function as arg
@@ -163,7 +175,6 @@ const mapDispatchToProps = (dispatch) => {
         onDeleteToDo: (id) => dispatch(toDoActionCreator.deleteToDos(id)),
         onCreateToDo: (toDo) => dispatch(toDoActionCreator.createToDos(toDo)),
         onSearchToDo: (term) => dispatch(toDoActionCreator.searchToDos(term)),
-        currentUser: () => dispatch(userActionCreator.getUser(localStorage.getItem(USERNAME)))
     };
 };
 

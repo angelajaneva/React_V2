@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import Page from "../Views/Page";
-import * as reviewsActionCreator from "../../store/actions/reviews";
 import StarRatings from 'react-star-ratings';
 import ReactPaginate from 'react-paginate';
 import {Events, animateScroll as scroll} from 'react-scroll'
 import ValidForm from 'react-valid-form-component'
-import * as queryString from 'query-string'
+
+import * as reviewsActionCreator from "../../store/actions/reviews";
+import Page from "../Views/Page";
+
 
 class Reviews extends Component {
 
@@ -23,29 +24,18 @@ class Reviews extends Component {
     componentDidMount() {
         this.props.getReviews();
 
-        Events.scrollEvent.register('begin', function(to, element) {
+        Events.scrollEvent.register('begin', function (to, element) {
         });
 
-        Events.scrollEvent.register('end', function(to, element) {
+        Events.scrollEvent.register('end', function (to, element) {
         });
 
-        console.log(window.location.search + " aaa");
-        const values = queryString.parse(window.location.search);
-        console.log(values.term)
-        // fetchData(values.term)
     }
 
     componentWillUnmount() {
         Events.scrollEvent.remove('begin');
         Events.scrollEvent.remove('end');
     }
-
-     getParams = (location) =>{
-        const searchParams = new URLSearchParams(location.search);
-        return {
-            query: searchParams.get('term') || '',
-        };
-    };
 
 
     handleChangeText = event => {
@@ -61,7 +51,7 @@ class Reviews extends Component {
     };
 
 
-    changeRating = (newRating, name) => {
+    changeRating = (newRating) => {
         this.setState({
             rating: newRating
         });
@@ -187,7 +177,7 @@ class Reviews extends Component {
                                       onChange={this.handleChangeClass}
                                       required
                                       minLength="2"
-                                      // maxLength="100"
+                                // maxLength="100"
                             />
 
                             <label className={"font-weight-bold mt-4"}>Description</label>
@@ -222,14 +212,14 @@ const mapStateToProps = (state) => {
         reviews: state.reviewsReducer.reviews,
         pageSize: state.reviewsReducer.pageSize,
         page: state.reviewsReducer.page,
-        totalPages: state.reviewsReducer.totalPages
+        totalPages: state.reviewsReducer.totalPages,
     }
 };
 //receives the dispatch function as arg
 const mapDispatchToProps = (dispatch) => {
     return {
         getReviews: (page = 0) => dispatch(reviewsActionCreator.loadReviews(page)),
-        onCreateReview: (review) => dispatch(reviewsActionCreator.createReview(review))
+        onCreateReview: (review) => dispatch(reviewsActionCreator.createReview(review)),
     };
 };
 

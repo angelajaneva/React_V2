@@ -35,13 +35,13 @@ class SignIn extends Component {
             password: this.state.password
         };
         login(user).then(response => {
-            console.log(response.data + "aaa");
+            // console.log(response.data);
             notification.success({
                 message: 'Success Message',
                 description: "You're successfully logged!",
             });
             auth.setToken(response.data, true, ACCESS_TOKEN);
-            localStorage.setItem(ACCESS_TOKEN, response.data);
+            // localStorage.setItem(ACCESS_TOKEN, response.data);
             localStorage.setItem(USERNAME, (this.state.username));
             this.props.history.push("/home");
         }).catch(error => {

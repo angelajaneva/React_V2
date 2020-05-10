@@ -4,7 +4,13 @@ const initialState = {
     notes: [],
     classes: [],
     questions: [],
-    user: []
+    user: {
+        id: '',
+        username: '',
+        password: '',
+        student: {},
+        roles: []
+    }
 };
 
 const reducer = (state = initialState, action) => {

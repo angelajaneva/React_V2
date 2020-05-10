@@ -4,7 +4,6 @@ const ACCESS_TOKEN = 'accessToken';
 const TOKEN_KEY = ACCESS_TOKEN;
 const USER_INFO = 'userInfo';
 
-const parse = JSON.parse;
 const stringify = JSON.stringify;
 
 const auth = {
@@ -51,10 +50,9 @@ const auth = {
      * @return {String|Object}     Data from the storage
      */
     get(key) {
-        console.log("key: " + key);
+        // console.log("key: " + key);
         if (localStorage && localStorage.getItem(key)) {
-            console.log(localStorage.getItem(key));
-            return JSON.parse(localStorage.getItem(key)) || null;
+            return JSON.stringify(localStorage.getItem(key)) || null;
         }
 
         if (sessionStorage && sessionStorage.getItem(key)) {

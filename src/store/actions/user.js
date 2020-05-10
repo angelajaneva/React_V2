@@ -11,6 +11,7 @@ export const setUser = (user) => {
 
 export const getUser = (username) => {
     return dispatch => {
+        console.log(username);
         service.getUser(username).then(response => {
             dispatch(setUser(response.data));
         })
