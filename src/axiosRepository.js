@@ -11,12 +11,12 @@ const service = {
         return axios.get("/questions")
     },
 
-    getClasses: () => {
-        return axios.get("/class/student/S17001")
+    getClasses: (username) => {
+        return axios.get("/class/student/" + username)
     },
 
-    getToDo: () => {
-        return axios.get("/todos")
+    getToDo: (username) => {
+        return axios.get("/todos/" + username)
     },
 
     getReviews: () => {
@@ -43,7 +43,7 @@ const service = {
         const formParams = qs.stringify(data);
         return axios.patch("/note/edit", formParams, {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
             }
         })
     },

@@ -5,6 +5,7 @@ const TOKEN_KEY = ACCESS_TOKEN;
 const USER_INFO = 'userInfo';
 
 const stringify = JSON.stringify;
+const USERNAME = 'username';
 
 const auth = {
     /**
@@ -67,8 +68,8 @@ const auth = {
         return auth.get(tokenKey);
     },
 
-    getUserInfo(userInfo = USER_INFO) {
-        return auth.get(userInfo);
+    getUsername(){
+        return localStorage.getItem(USERNAME);
     },
 
     /**

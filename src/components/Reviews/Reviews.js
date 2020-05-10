@@ -7,7 +7,7 @@ import ValidForm from 'react-valid-form-component'
 
 import * as reviewsActionCreator from "../../store/actions/reviews";
 import Page from "../Views/Page";
-
+import auth from "../../Authentication/auth";
 
 class Reviews extends Component {
 
@@ -26,10 +26,8 @@ class Reviews extends Component {
 
         Events.scrollEvent.register('begin', function (to, element) {
         });
-
         Events.scrollEvent.register('end', function (to, element) {
         });
-
     }
 
     componentWillUnmount() {
@@ -63,7 +61,8 @@ class Reviews extends Component {
         let review = {
             text: this.state.reviewText,
             rated: this.state.rating,
-            className: this.state.reviewClass
+            className: this.state.reviewClass,
+            username: auth.getUsername()
         };
 
 

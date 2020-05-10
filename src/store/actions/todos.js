@@ -38,11 +38,11 @@ export const searchToDo = (data) => {
 
 
 //async
-export const loadToDos = () => {
+export const loadToDos = (username) => {
 
     return (dispatch) => {
         //here I can execute async code and then dispatch a new action
-        service.getToDo().then(response => {
+        service.getToDo(username).then(response => {
             dispatch(setToDo(response.data));
         })
     }

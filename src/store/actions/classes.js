@@ -9,10 +9,10 @@ export const setClass = (classes) => {
 };
 
 //async
-export const loadClassesForStudent = () => {
+export const loadClassesForStudent = (username) => {
     return (dispatch) => {
         //here I can execute async code and then dispatch a new action
-        service.getClasses().then(response => {
+        service.getClasses(username).then(response => {
             dispatch(setClass(response.data));
         })
     }

@@ -29,7 +29,6 @@ class App extends Component {
         this.props.loadingNotes();
         this.props.loadingQuestions();
         this.props.loadClasses();
-        this.props.loadToDos();
     }
 
 //sekade kaj so se koriste this.state.notes sea da se zamene so this.props.nts
@@ -169,9 +168,8 @@ const mapDispatchToProps = (dispatch) => {
         onCreateQuestion: (question) => dispatch(questionActionCreator.addQuestions(question)),
         onDeleteQuestion: (id) => dispatch(questionActionCreator.deleteQuestions(id)),
         loadingQuestions: () => dispatch(questionActionCreator.loadQuestions()),
-        loadClasses: () => dispatch(classesActionCreator.loadClassesForStudent()),
+        loadClasses: () => dispatch(classesActionCreator.loadClassesForStudent(auth.getUsername())),
         onUpdateToDo: (toDo) => dispatch(toDoActionCreator.updateToDos(toDo)),
-        loadToDos: () => dispatch(toDoActionCreator.loadToDos()),
         onDeleteToDo: (id) => dispatch(toDoActionCreator.deleteToDos(id)),
         onCreateToDo: (toDo) => dispatch(toDoActionCreator.createToDos(toDo)),
         onSearchToDo: (term) => dispatch(toDoActionCreator.searchToDos(term)),

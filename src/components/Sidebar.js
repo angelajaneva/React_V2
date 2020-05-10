@@ -5,6 +5,8 @@ import {connect} from "react-redux";
 
 import auth from "../Authentication/auth";
 import * as userActionCreator from "../store/actions/user";
+import * as classesActionCreator from "../store/actions/classes";
+import * as toDoActionCreator from "../store/actions/todos";
 
 const USERNAME = 'username';
 const ACCESS_TOKEN = 'accessToken';
@@ -14,15 +16,19 @@ class Sidebar extends Component {
 
     componentDidMount() {
         this.props.currentUser();
+        this.props.loadClasses();
+        this.props.loadToDos();
     }
+
 
     getClasses = () => {
         // console.log(auth.getToken() !== null);
-        return this.props.subjects.map(subject => {
+
+        return this.props.classes.map(subject => {
             return (
                 <div key={subject.id}>
                     <li>
-                        <Link to={`/classes/${subject.id}`} onClick={this.props.onClickHandler}>{subject.id}</Link>
+                        <Link to={`/classes/${subject.id}`}>{subject.id}</Link>
                     </li>
                 </div>
             )
@@ -46,7 +52,7 @@ class Sidebar extends Component {
                         {/*style="background-image: url(images/bg_1.jpg);"*/}
                         <div className="user-logo">
                             <div className="img" style={{backgroundImage: 'url(' + require('./user.png') + ')'}}/>
-                                <h3>{this.props.user.student.firstName} {this.props.user.student.lastName}</h3>
+                            <h3>{this.props.user.student.firstName} {this.props.user.student.lastName}</h3>
                         </div>
                     </div>
                     <ul className="list-unstyled components mb-5">
@@ -69,13 +75,14 @@ class Sidebar extends Component {
                             </Collapsible>
                         </li>
                         <li>
-                            <Link to={"/todo"}><span className="ti-pencil-alt mr-3"/>Todos</Link>
+                            <Link to={"/todo"}><span className="ti-pencil-alt mr-3"/>ToDOs</Link>
                         </li>
                         <li>
                             <Link to={"/reviews"}><i className="ti-book mr-3"/> Reviews</Link>
                         </li>
                         <li>
-                            <Link to={"/"} onClick={this.handleLogout}><span className="ti-shift-left mr-3"/> Sign Out</Link>
+                            <Link to={"/"} onClick={this.handleLogout}><span className="ti-shift-left mr-3"/> Sign
+                                Out</Link>
                         </li>
                     </ul>
                 </nav>
@@ -86,13 +93,19 @@ class Sidebar extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.classReducer.user
+        user: state.classReducer.user,
+        classes: state.classReducer.classes,
+        toDos: state.toDoReducer.toDos,
+
     }
 };
 //receives the dispatch function as arg
 const mapDispatchToProps = (dispatch) => {
+
     return {
-        currentUser: () => dispatch(userActionCreator.getUser(localStorage.getItem(USERNAME)))
+        currentUser: () => dispatch(userActionCreator.getUser(localStorage.getItem(USERNAME))),
+        loadClasses: () => dispatch(classesActionCreator.loadClassesForStudent(localStorage.getItem(USERNAME))),
+        loadToDos: () => dispatch(toDoActionCreator.loadToDos(auth.getUsername())),
 
     };
 };

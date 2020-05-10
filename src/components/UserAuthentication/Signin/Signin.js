@@ -5,8 +5,8 @@ import {login} from "../UserApi";
 import auth from "../../../Authentication/auth";
 import {notification} from "antd";
 
-const ACCESS_TOKEN = 'accessToken';
-const USERNAME = 'username';
+export const ACCESS_TOKEN = 'accessToken';
+export const USERNAME = 'username';
 
 class SignIn extends Component {
     constructor(props) {

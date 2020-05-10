@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import ToDoForm from "./ToDoForm";
 import 'rc-checkbox/assets/index.css';
 import Page from "../Views/Page";
+import auth from "../../Authentication/auth";
 
 const Todo = (props) => {
     const [completed, setCompleted] = useState(false);
@@ -41,6 +42,7 @@ const Todo = (props) => {
     };
 
     const getTodo = () => {
+
         return props.todos.map(todo => {
             return (
                 <ToDoForm key={todo.id}
@@ -93,7 +95,8 @@ const Todo = (props) => {
         e.preventDefault();
 
         props.onCreateToDo({
-            "text": todo
+            "text": todo,
+            "username": auth.getUsername()
         });
         setTodo("");
         setNewTodo(false);

@@ -8,7 +8,6 @@ export const setReviews = (reviews, page, pageSize, totalPages) => {
         page: page,
         pageSize: pageSize,
         totalPages: totalPages
-
     }
 };
 
@@ -32,7 +31,7 @@ export const loadReviews = (page) => {
             console.log(pages);
             dispatch(setReviews(response.data, page,
                 3,
-                4));
+                5));
         })
     }
 };

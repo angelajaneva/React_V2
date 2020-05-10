@@ -5,6 +5,7 @@ import Page from "../../Views/Page";
 import Navigation from "../Navigation";
 import SearchInput, {createFilter} from 'react-search-input'
 import ValidForm from "react-valid-form-component";
+import auth from "../../../Authentication/auth";
 
 const KEYS_TO_FILTERS = ['text', 'student.firstName', 'student.lastName'];
 
@@ -21,7 +22,7 @@ const Questions = (props) => {
         if (getClass) {
             setName(getClass.name);
         }
-    }, [props.classes, props.id, setName]);
+    }, [props.classes, props.id]);
 
     const getQuestions = () => {
         const newRef = props.questions.filter(question => {
@@ -55,11 +56,12 @@ const Questions = (props) => {
     };
 
     const saveQuestion = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
 
         props.onCreate({
             "classId": classId,
-            "text": questionText
+            "text": questionText,
+            "username": auth.getUsername()
         });
 
         setQuestionText("");
@@ -84,7 +86,7 @@ const Questions = (props) => {
                                           onChange={(e) => setQuestionText(e.target.value)}
                                           className={"form-control"}
                                           required
-                                          minLength="50"
+                                          minLength="10"
                                 />
                             </div>
                             <button className={"btn btn-primary ml-1"}

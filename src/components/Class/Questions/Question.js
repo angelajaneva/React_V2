@@ -3,6 +3,8 @@ import Comment from "./Comment"
 import axios from "../../../custom-axios"
 import axiosRepository from "../../../axiosRepository"
 import Highlighter from "react-highlight-words";
+import auth from "../../../Authentication/auth";
+
 
 const Question = (props) => {
     const [comments, setComments] = useState([]);
@@ -18,6 +20,7 @@ const Question = (props) => {
 
     const getComments = () => {
         return comments.length > 0 ? comments.map(comment => {
+
             return (
                 <Comment key={comment.id} text={comment.content}
                          date={comment.createdOn} student={comment.student}/>
@@ -42,7 +45,8 @@ const Question = (props) => {
     const saveComment = (e) => {
         e.preventDefault();
         const content = {
-            "content": comment
+            "content": comment,
+            "username": auth.getUsername()
         };
         axiosRepository.addComment(props.id, content).then((data) => {
             setComments(comments.concat(data.data));
@@ -60,7 +64,7 @@ const Question = (props) => {
             <div className="question-holder">
                 <div className="question-holder-header">
                     <div className="question-holder-header-left">
-                        <img src={require('../../user.png')}/>
+                        <img src={require('../../user.png')} alt={"user"}/>
                         <h5><Highlighter searchWords={[props.searchTerm]}
                                          textToHighlight={props.firstName + " "}
                                          highlightStyle={{backgroundColor: '#E7FF6A'}}/>
