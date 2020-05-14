@@ -111,10 +111,6 @@ const service = {
         return axios.delete("/todo/" + id);
     },
 
-    searchTodo: (searchTerm) => {
-        return axios.get(`/todo/search?term=${searchTerm}`);
-    },
-
     getReviewsPaged: (page, pageSize) => {
         return axios.get(`/reviews/paged?page=${page}`, {
             headers: {
@@ -137,7 +133,8 @@ const service = {
     },
 
     searchReviews: (searchTerm) => {
-      return axios.get(`/todo/search?term=${searchTerm}`)
+        console.log(searchTerm)
+        return axios.get(`/reviews/search?criteria=${searchTerm}`)
     },
 
     getUser: (username) => {

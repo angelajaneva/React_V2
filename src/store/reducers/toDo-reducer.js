@@ -10,7 +10,6 @@ const reducer = (state = initialState, action) => {
         return {
             ...state,
             toDos: action.toDos,
-            searched_toDos: action.toDos
         }
     }
     if (action.type === actionTYPE.EDIT_TODO) {

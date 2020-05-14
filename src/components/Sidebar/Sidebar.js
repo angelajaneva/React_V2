@@ -3,10 +3,10 @@ import {Link} from "react-router-dom";
 import Collapsible from 'react-collapsible'
 import {connect} from "react-redux";
 
-import auth from "../Authentication/auth";
-import * as userActionCreator from "../store/actions/user";
-import * as classesActionCreator from "../store/actions/classes";
-import * as toDoActionCreator from "../store/actions/todos";
+import auth from "../../Authentication/auth";
+import * as userActionCreator from "../../store/actions/user";
+import * as classesActionCreator from "../../store/actions/classes";
+import * as toDoActionCreator from "../../store/actions/todos";
 
 const USERNAME = 'username';
 const ACCESS_TOKEN = 'accessToken';
@@ -22,7 +22,6 @@ class Sidebar extends Component {
 
 
     getClasses = () => {
-        // console.log(auth.getToken() !== null);
 
         return this.props.classes.map(subject => {
             return (
@@ -37,7 +36,7 @@ class Sidebar extends Component {
 
     handleLogout = () => {
         // localStorage.removeItem(ACCESS_TOKEN);
-        localStorage.removeItem(USERNAME);
+        auth.clearUser();
         auth.clearToken(ACCESS_TOKEN);
         auth.clearAppStorage();
 
@@ -51,7 +50,7 @@ class Sidebar extends Component {
                     <div className="img bg-wrap text-center py-4">
                         {/*style="background-image: url(images/bg_1.jpg);"*/}
                         <div className="user-logo">
-                            <div className="img" style={{backgroundImage: 'url(' + require('./user.png') + ')'}}/>
+                            <div className="img" style={{backgroundImage: 'url(' + require('../../photos/user.png') + ')'}}/>
                             <h3>{this.props.user.student.firstName} {this.props.user.student.lastName}</h3>
                         </div>
                     </div>

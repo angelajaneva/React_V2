@@ -35,21 +35,12 @@ class Signup extends Component {
             username: {
                 value: ''
             },
-            email: {
-                value: ''
-            },
             password: {
                 value: ''
             },
             roles:[]
-            ,
-            phoneNumber: {
-                value: ''
-            },
-            address: {
-                value: ''
-            }
-        }
+
+        };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         //this.validateUsernameAvailability = this.validateUsernameAvailability.bind(this);
@@ -118,7 +109,7 @@ class Signup extends Component {
     }
 
     render() {
-        const {name, surname, username,email,password,roles,phoneNumber,address  } = this.state
+        const {roles} = this.state;
         return (
             <div className="signup-container">
                 <h1 className="page-title">Sign Up</h1>

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import Checkbox from "rc-checkbox";
-import axios from "../../custom-axios";
+import axios from "../../axios/custom-axios";
 
 const Form = (props) => {
     const [checked, setChecked] = useState(props.todo.completed);

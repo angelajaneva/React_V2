@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Comment from "./Comment"
-import axios from "../../../custom-axios"
-import axiosRepository from "../../../axiosRepository"
+import axios from "../../../axios/custom-axios"
+import axiosRepository from "../../../axios/axiosRepository"
 import Highlighter from "react-highlight-words";
 import auth from "../../../Authentication/auth";
 
@@ -64,7 +64,7 @@ const Question = (props) => {
             <div className="question-holder">
                 <div className="question-holder-header">
                     <div className="question-holder-header-left">
-                        <img src={require('../../user.png')} alt={"user"}/>
+                        {/*<img src={require('../../user.png')} alt={"user"}/>*/}
                         <h5><Highlighter searchWords={[props.searchTerm]}
                                          textToHighlight={props.firstName + " "}
                                          highlightStyle={{backgroundColor: '#E7FF6A'}}/>

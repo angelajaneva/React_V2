@@ -1,6 +1,6 @@
 //action creator for questions
 import * as actionTYPES from "../actions.js"
-import service from "../../axiosRepository";
+import service from "../../axios/axiosRepository";
 
 export const addQuestion = (question) => {
     return {

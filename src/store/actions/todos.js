@@ -1,5 +1,5 @@
 import * as actionTYPES from "../actions.js"
-import service from "../../axiosRepository";
+import service from "../../axios/axiosRepository";
 
 export const setToDo = (todos) => {
     return {
@@ -29,12 +29,6 @@ export const updateToDo = (todo) => {
     }
 };
 
-export const searchToDo = (data) => {
-    return {
-        type: actionTYPES.SEARCH_TODOs,
-        data: data
-    }
-};
 
 
 //async
@@ -73,11 +67,3 @@ export const deleteToDos = (id) => {
     }
 };
 
-export const searchToDos = (term) => {
-    return dispatch => {
-        service.searchTodo(term).then((response) => {
-            dispatch(setToDo(response.data));
-            loadToDos()
-        })
-    }
-};

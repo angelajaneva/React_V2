@@ -41,10 +41,9 @@ const auth = {
         return auth.clear(tokenKey);
     },
 
-    clearUserInfo(userInfo = USER_INFO) {
-        return auth.clear(userInfo);
+    clearUser(){
+      return localStorage.removeItem(USERNAME);
     },
-
     /**
      * Returns data from storage
      * @param  {String} key Item to get from the storage

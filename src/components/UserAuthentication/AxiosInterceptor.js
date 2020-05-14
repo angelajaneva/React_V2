@@ -1,4 +1,3 @@
-// import {ACCESS_TOKEN} from "../../constraints";
 import auth from "../../Authentication/auth";
 
 const ACCESS_TOKEN = 'accessToken';

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import Navigation from "./Navigation";
-import axios from "../../custom-axios";
+import axios from "../../axios/custom-axios";
 import Page from "../Views/Page";
 
 const Content = (props) => {

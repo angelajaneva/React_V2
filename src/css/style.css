@@ -4529,11 +4529,11 @@ input[type="button"].btn-block {
 
 .navbar-nav .nav-item:hover{
     /*background-color: lightgray;*/
-    border-bottom: 7px solid darkgray;
+    border-bottom: 3px solid darkgray;
 }
 
 .navbar-nav nav-item:active{
-    border-bottom: 7px solid darkgray;
+    border-bottom: 3px solid darkgray;
 }
 
 .nav-link {

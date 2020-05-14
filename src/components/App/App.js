@@ -2,24 +2,22 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
 import {connect} from "react-redux";
 
-import * as noteActionCreator from './store/actions/note'
-import * as questionActionCreator from './store/actions/questions'
-import * as classesActionCreator from './store/actions/classes'
-import * as toDoActionCreator from './store/actions/todos'
+import * as noteActionCreator from '../../store/actions/note'
+import * as questionActionCreator from '../../store/actions/questions'
+import * as classesActionCreator from '../../store/actions/classes'
+import * as toDoActionCreator from '../../store/actions/todos'
 
 import './App.css';
-import './components/Header'
-import Header from './components/Header';
-import Home from './components/Home'
-import Sidebar from "./components/Sidebar";
-import Notes from "./components/Class/Notes/Notes";
-import Questions from "./components/Class/Questions/Questions";
-import ToDo from "./components/Todos/ToDo";
-import Reviews from "./components/Reviews/Reviews"
-import SignIn from "./components/UserAuthentication/Signin/Signin";
-import auth from "./Authentication/auth";
-import About from "./components/About/About";
-
+import Header from '../Header/Header';
+import Home from '../Home/Home'
+import Sidebar from "../Sidebar/Sidebar";
+import Notes from "../Class/Notes/Notes";
+import Questions from "../Class/Questions/Questions";
+import ToDo from "../Todos/ToDo";
+import Reviews from "../Reviews/Reviews"
+import SignIn from "../UserAuthentication/Signin/Signin";
+import auth from "../../Authentication/auth";
+import About from "../About/About";
 
 
 class App extends Component {
@@ -120,23 +118,20 @@ class App extends Component {
                                 <ToDo todos={this.props.toDos}
                                       onDelete={this.props.onDeleteToDo}
                                       onSubmit={this.props.onUpdateToDo}
-                                      onSearch={this.props.onSearchToDo}
                                       onCreateToDo={this.props.onCreateToDo}
-                                      searchedToDos={this.props.searched_toDos}
                                 />
                             </div>
                         ) : (
                             <Redirect to="/signin"/>)
                     }/>
 
-                    <Route path={"/reviews"} render={() =>
+                    <Route path={"/reviews"} render={(props) =>
 
                         auth.getToken() !== null ? (
                             <div className={"wrapper d-flex align-items-stretch"} style={{height: '165%'}}
                                  id="content">
-                                <Sidebar subjects={this.props.classes}
-                                />
-                                <Reviews/>
+                                <Sidebar subjects={this.props.classes}/>
+                                <Reviews {...props} url={window.location.search} />
                             </div>
                         ) : (
                             < Redirect to="/signin"/>)
@@ -155,7 +150,6 @@ const mapStateToProps = (state) => {
         questions: state.classReducer.questions,
         classes: state.classReducer.classes,
         toDos: state.toDoReducer.toDos,
-        searched_toDos: state.toDoReducer.searched_toDos,
     }
 };
 //receives the dispatch function as arg
@@ -172,7 +166,6 @@ const mapDispatchToProps = (dispatch) => {
         onUpdateToDo: (toDo) => dispatch(toDoActionCreator.updateToDos(toDo)),
         onDeleteToDo: (id) => dispatch(toDoActionCreator.deleteToDos(id)),
         onCreateToDo: (toDo) => dispatch(toDoActionCreator.createToDos(toDo)),
-        onSearchToDo: (term) => dispatch(toDoActionCreator.searchToDos(term)),
     };
 };
 

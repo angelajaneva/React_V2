@@ -8,6 +8,7 @@ import ValidForm from 'react-valid-form-component'
 import * as reviewsActionCreator from "../../store/actions/reviews";
 import Page from "../Views/Page";
 import auth from "../../Authentication/auth";
+import Review from "./Review"
 
 class Reviews extends Component {
 
@@ -18,22 +19,61 @@ class Reviews extends Component {
             reviewClass: "",
             reviewText: "",
             rating: 0,
+            searching: false,
+            term: "",
+            results: []
         };
     }
 
     componentDidMount() {
-        this.props.getReviews();
+            this.props.getReviews();
+            this.props.loadSearchedReviews();
 
+        // console.log(this.getParams(window.location))
         Events.scrollEvent.register('begin', function (to, element) {
         });
         Events.scrollEvent.register('end', function (to, element) {
         });
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.url !== window.location.search) {
+
+            if (this.props.location.search === "") {
+                this.setState({searching: false})
+            }
+        }
+    }
+
+
     componentWillUnmount() {
         Events.scrollEvent.remove('begin');
         Events.scrollEvent.remove('end');
     }
+
+
+    getParams = (location) => {
+        const searchParams = new URLSearchParams(location.search);
+        return searchParams.get("className") || ""
+
+    };
+
+    setParams = ({query = ""}) => {
+        this.setState({searching: true});
+
+        const searchParams = new URLSearchParams();
+        searchParams.set("className", query);
+        return searchParams.toString();
+
+    };
+
+    updateURL = () => {
+        this.props.loadSearchedReviews(this.state.term);
+        const url = this.setParams({query: this.state.term});
+        this.props.history.push(`?${url}`);
+    };
+
+    updateTerm = e => this.setState({term: e.target.value});
 
 
     handleChangeText = event => {
@@ -84,6 +124,36 @@ class Reviews extends Component {
     };
 
 
+    getReviews = () => {
+        return this.props.reviews.map(item => {
+            return (
+                <Review key={item.id}
+                        firstName={item.student.firstName}
+                        lastName={item.student.lastName}
+                        aclass={item.aclass.name}
+                        rated={item.rated}
+                        createdOn={item.createdOn}
+                        text={item.text}
+                />
+            )
+        })
+    };
+
+    getSearchedReviews = () => {
+        return this.props.searchedReviews.map(item => {
+            return (
+                <Review key={item.id}
+                        firstName={item.student.firstName}
+                        lastName={item.student.lastName}
+                        aclass={item.aclass.name}
+                        rated={item.rated}
+                        createdOn={item.createdOn}
+                        text={item.text}
+                />
+            )
+        })
+    };
+
     paginate = () => {
         if (this.props.page !== null) {
             return (
@@ -116,43 +186,38 @@ class Reviews extends Component {
                         <div className={"row row d-flex align-items-center justify-content-end"}>
                             <div className={"col-12 col-md-3 d-flex align-items-center"}>
                                 <button className={"btn card ti-write my-2 my-sm-0"}
-                                        title={"Write a review"} onClick={() => scroll.scrollToBottom()}/>
-                                <input type={"test"} placeholder={"Search"} className="form-control"/>
-                                <button className={"btn card ti-search my-2 my-sm-0"} title={"Search"}/>
+                                        title={"Write a review"}
+                                        onClick={() => scroll.scrollToBottom()}/>
+                                <input type={"test"}
+                                       placeholder={"Search"}
+                                       className="form-control"
+                                       onChange={this.updateTerm}
+                                />
+                                <button className={"btn card ti-search my-2 my-sm-0"}
+                                        title={"Search"}
+                                        onClick={this.updateURL}/>
                             </div>
                         </div>
                     </div>
-                    {
-                        this.props.reviews.length ? this.props.reviews.map(item => {
-                            return (
-                                <div className={"review"} key={item.id}>
-                                    <div className="review-holder">
-                                        <div className="review-holder-header">
-                                            <div className="review-holder-header-left">
-                                                <img src={require('../user.png')} alt=""/>
-                                                <h6>{item.student.firstName} {item.student.lastName} about
-                                                    <span className="font-weight-bolder"> {item.aclass.name}</span>
-                                                </h6>
-                                            </div>
-                                            <div className="review-holder-header-right">
-                                                <button className="btn btn-link text-warning">
-                                                    <i className={"fa fa-star mr-1"} aria-hidden="false"/>
-                                                    <span className={"rate"}>{item.rated}/5</span>
-                                                    <br/><span><small>{item.createdOn}</small></span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div className="review-holder-body">
-                                            {item.text}
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        }) : (
+
+                    {this.state.searching ?
+                        this.props.searchedReviews.length ? this.getSearchedReviews() :
                             <h3 className={"not-found"}>No reviews found</h3>
+                        : (
+                            this.props.reviews.length ? (
+                                <>
+                                    {this.getReviews()}
+                                    {this.paginate()}
+                                </>
+                            ) : (
+                                <>
+                                    <h3 className={"not-found"}>No reviews found</h3>
+                                    {this.paginate()}
+                                </>
+
+                            )
                         )
                     }
-                    {this.paginate()}
                     <div className="container card">
                         <ValidForm className={"reviews-form mb-4"}
                                    nosubmit
@@ -205,6 +270,7 @@ class Reviews extends Component {
     }
 }
 
+
 //which property should hold which slide of the state
 const mapStateToProps = (state) => {
     return {
@@ -212,6 +278,7 @@ const mapStateToProps = (state) => {
         pageSize: state.reviewsReducer.pageSize,
         page: state.reviewsReducer.page,
         totalPages: state.reviewsReducer.totalPages,
+        searchedReviews: state.reviewsReducer.searched
     }
 };
 //receives the dispatch function as arg
@@ -219,6 +286,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getReviews: (page = 0) => dispatch(reviewsActionCreator.loadReviews(page)),
         onCreateReview: (review) => dispatch(reviewsActionCreator.createReview(review)),
+        loadSearchedReviews: (term) => dispatch(reviewsActionCreator.searchReview(term))
     };
 };
 
