@@ -202,7 +202,7 @@ class Reviews extends Component {
 
                     {this.state.searching ?
                         this.props.searchedReviews.length ? this.getSearchedReviews() :
-                            <h3 className={"not-found"}>No reviews found</h3>
+                            <h3 className={"not-found"}>There no such classname</h3>
                         : (
                             this.props.reviews.length ? (
                                 <>
